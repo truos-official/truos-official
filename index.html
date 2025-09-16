@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRUOS - Universal Trust Protocol</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #1d1d1f;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+        
+        .nav-logo .truos {
+            font-weight: 900;
+        }
+        
+        .nav-logo .protocol {
+            font-weight: 400;
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-left: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: #1d1d1f;
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .nav-links a:hover {
+            color: #666;
+        }
+        
+        /* Enhanced background with network imagery */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            position: relative;
+            padding: 0 2rem;
+            overflow: hidden;
+        }
+        
+        /* Network background pattern */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(0, 0, 0, 0.02) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, rgba(0, 0, 0, 0.02) 2px, transparent 2px),
+                radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.01) 1px, transparent 1px);
+            background-size: 60px 60px, 80px 80px, 40px 40px;
+            animation: networkPulse 20s infinite ease-in-out;
+            z-index: 1;
+        }
+        
+        @keyframes networkPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        
+        /* Floating network nodes */
+        .network-nodes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .network-node {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(29, 29, 31, 0.1);
+            border-radius: 50%;
+            animation: nodeFloat 15s infinite linear;
+        }
+        
+        .network-node::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 48px;
+            height: 48px;
+            border: 1px solid rgba(29, 29, 31, 0.03);
+            border-radius: 50%;
+            animation: nodePulse 3s infinite ease-in-out;
+        }
+        
+        .network-node:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .network-node:nth-child(2) { top: 30%; left: 80%; animation-delay: -5s; }
+        .network-node:nth-child(3) { top: 70%; left: 20%; animation-delay: -10s; }
+        .network-node:nth-child(4) { top: 60%; left: 70%; animation-delay: -15s; }
+        .network-node:nth-child(5) { top: 40%; left: 50%; animation-delay: -20s; }
+        .network-node:nth-child(6) { top: 80%; left: 60%; animation-delay: -25s; }
+        
+        @keyframes nodeFloat {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            25% { transform: translateY(-20px) scale(1.1); }
+            50% { transform: translateY(10px) scale(0.9); }
+            75% { transform: translateY(-15px) scale(1.05); }
+        }
+        
+        @keyframes nodePulse {
+            0%, 100% { transform: scale(0.8); opacity: 0.1; }
+            50% { transform: scale(1.2); opacity: 0.3; }
+        }
+        
+        /* Connection lines between nodes */
+        .connection-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .connection-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(29, 29, 31, 0.05) 20%, 
+                rgba(29, 29, 31, 0.1) 50%, 
+                rgba(29, 29, 31, 0.05) 80%, 
+                transparent
+            );
+            animation: connectionFlow 8s infinite ease-in-out;
+        }
+        
+        .connection-line:nth-child(1) {
+            top: 25%;
+            left: 15%;
+            width: 200px;
+            transform: rotate(45deg);
+            animation-delay: 0s;
+        }
+        
+        .connection-line:nth-child(2) {
+            top: 65%;
+            left: 25%;
+            width: 150px;
+            transform: rotate(-30deg);
+            animation-delay: -2s;
+        }
+        
+        .connection-line:nth-child(3) {
+            top: 45%;
+            left: 60%;
+            width: 180px;
+            transform: rotate(60deg);
+            animation-delay: -4s;
+        }
+        
+        @keyframes connectionFlow {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.6; }
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.04em;
+            line-height: 0.9;
+        }
+        
+        .hero-brand {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 300;
+            color: #666;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.01em;
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 300;
+            color: #666;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .hero-description {
+            font-size: 1.25rem;
+            color: #86868b;
+            margin-bottom: 3rem;
+            line-height: 1.5;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #1d1d1f;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .hero-cta:hover {
+            background: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Features section background */
+        .features {
+            padding: 8rem 2rem;
+            background: #f5f5f7;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 20 0 L 0 0 0 20' fill='none' stroke='%23000000' stroke-width='0.5' stroke-opacity='0.03'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23grid)' /%3E%3C/svg%3E");
+            animation: gridMove 30s infinite linear;
+        }
+        
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(20px, 20px); }
+        }
+        
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: #1d1d1f;
+            text-align: center;
+            margin-bottom: 4rem;
+            letter-spacing: -0.03em;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: #1d1d1f;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .feature-description {
+            color: #86868b;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        
+        /* Problem section with trust imagery */
+        .problem {
+            padding: 8rem 2rem;
+            background: #1d1d1f;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .problem::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.02) 2px, transparent 2px),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.02) 2px, transparent 2px),
+                radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+            background-size: 100px 100px, 120px 120px, 60px 60px;
+            animation: problemPattern 25s infinite ease-in-out;
+        }
+        
+        @keyframes problemPattern {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* Trust web overlay for problem section */
+        .problem::after {
+            content: '';
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            width: 200px;
+            height: 200px;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cfilter id='glow'%3E%3CfeGaussianBlur stdDeviation='2' result='coloredBlur'/%3E%3CfeMerge%3E%3CfeMergeNode in='coloredBlur'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Ccircle cx='100' cy='100' r='3' fill='white' opacity='0.1' filter='url(%23glow)'/%3E%3Ccircle cx='50' cy='70' r='2' fill='white' opacity='0.08'/%3E%3Ccircle cx='150' cy='60' r='2' fill='white' opacity='0.08'/%3E%3Ccircle cx='80' cy='150' r='2' fill='white' opacity='0.08'/%3E%3Ccircle cx='140' cy='140' r='2' fill='white' opacity='0.08'/%3E%3Cline x1='100' y1='100' x2='50' y2='70' stroke='white' stroke-width='0.5' opacity='0.05'/%3E%3Cline x1='100' y1='100' x2='150' y2='60' stroke='white' stroke-width='0.5' opacity='0.05'/%3E%3Cline x1='100' y1='100' x2='80' y2='150' stroke='white' stroke-width='0.5' opacity='0.05'/%3E%3Cline x1='100' y1='100' x2='140' y2='140' stroke='white' stroke-width='0.5' opacity='0.05'/%3E%3C/svg%3E");
+            opacity: 0.3;
+            animation: trustWeb 20s infinite ease-in-out;
+        }
+        
+        @keyframes trustWeb {
+            0%, 100% { transform: rotate(0deg) scale(1); opacity: 0.2; }
+            50% { transform: rotate(180deg) scale(1.1); opacity: 0.4; }
+        }
+        
+        .problem-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .problem-title {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            letter-spacing: -0.03em;
+        }
+        
+        .problem-text {
+            font-size: 1.25rem;
+            color: #a1a1a6;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+        
+        .problem-highlight {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            margin-top: 3rem;
+        }
+        
+        /* Use cases with peer connection imagery */
+        .use-cases {
+            padding: 8rem 2rem;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .use-cases::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg width='300' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='nodeGradient'%3E%3Cstop offset='0%25' stop-color='%23000000' stop-opacity='0.02'/%3E%3Cstop offset='100%25' stop-color='%23000000' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='150' cy='150' r='100' fill='url(%23nodeGradient)'/%3E%3Ccircle cx='80' cy='80' r='60' fill='url(%23nodeGradient)'/%3E%3Ccircle cx='220' cy='100' r='40' fill='url(%23nodeGradient)'/%3E%3Ccircle cx='100' cy='220' r='50' fill='url(%23nodeGradient)'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: -100px -50px, 80% 20%, 20% 80%;
+            animation: peerNodes 30s infinite ease-in-out;
+        }
+        
+        @keyframes peerNodes {
+            0%, 100% { background-position: -100px -50px; opacity: 0.3; }
+            25% { background-position: 100px 50px; opacity: 0.5; }
+            50% { background-position: 200px -30px; opacity: 0.4; }
+            75% { background-position: -50px 100px; opacity: 0.6; }
+        }
+        
+        .use-cases-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+        
+        .use-case-card {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .use-case-icon {
+            width: 80px;
+            height: 80px;
+            background: #f5f5f7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 2rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .use-case-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .use-case-description {
+            color: #86868b;
+            line-height: 1.6;
+        }
+        
+        /* Waitlist section with subtle connection pattern */
+        .waitlist {
+            padding: 8rem 2rem;
+            background: #f5f5f7;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .waitlist::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(0, 0, 0, 0.005) 50px,
+                    rgba(0, 0, 0, 0.005) 51px
+                ),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(0, 0, 0, 0.005) 50px,
+                    rgba(0, 0, 0, 0.005) 51px
+                );
+            animation: waitlistPattern 40s infinite linear;
+        }
+        
+        @keyframes waitlistPattern {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(100px, 100px); }
+        }
+        
+        .waitlist-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .waitlist-title {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+        
+        .waitlist-subtitle {
+            font-size: 1.25rem;
+            color: #86868b;
+            margin-bottom: 3rem;
+            line-height: 1.5;
+        }
+        
+        .waitlist-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            font-size: 1rem;
+            background: white;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #1d1d1f;
+            box-shadow: 0 0 0 3px rgba(29, 29, 31, 0.1);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            font-size: 1rem;
+            background: white;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        .form-select:focus {
+            outline: none;
+            border-color: #1d1d1f;
+            box-shadow: 0 0 0 3px rgba(29, 29, 31, 0.1);
+        }
+        
+        .submit-button {
+            width: 100%;
+            padding: 1rem;
+            background: #1d1d1f;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        .submit-button:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+        
+        .success-message {
+            background: rgba(48, 209, 88, 0.1);
+            border: 1px solid rgba(48, 209, 88, 0.2);
+            color: #30d158;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .success-message.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .error-message {
+            background: rgba(255, 59, 48, 0.1);
+            border: 1px solid rgba(255, 59, 48, 0.2);
+            color: #ff3b30;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Footer */
+        .footer {
+            background: #1d1d1f;
+            color: #86868b;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-text {
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-link {
+            color: #a1a1a6;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: white;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .nav-logo .protocol {
+                display: none;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .feature-card {
+                padding: 2rem;
+            }
+            
+            .use-cases-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .waitlist-form {
+                padding: 2rem;
+            }
+        }
+        
+        /* Scroll animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Parallax effect */
+        .parallax {
+            transform: translateY(0);
+            transition: transform 0.1s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-content">
+            <a href="#" class="nav-logo">
+                <span class="truos">TRUOS</span>
+                <span class="protocol">Universal Trust Protocol</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#use-cases">Use Cases</a></li>
+                <li><a href="#waitlist">Waitlist</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Network nodes -->
+        <div class="network-nodes">
+            <div class="network-node"></div>
+            <div class="network-node"></div>
+            <div class="network-node"></div>
+            <div class="network-node"></div>
+            <div class="network-node"></div>
+            <div class="network-node"></div>
+        </div>
+        
+        <!-- Connection lines -->
+        <div class="connection-lines">
+            <div class="connection-line"></div>
+            <div class="connection-line"></div>
+            <div class="connection-line"></div>
+        </div>
+        
+        <div class="hero-content fade-up">
+            <h1 class="hero-title">TRUOS</h1>
+            <div class="hero-brand">Universal Trust Protocol</div>
+            <h2 class="hero-subtitle">The Future of Professional Trust</h2>
+            <p class="hero-description">
+                Built by AI researchers, blockchain experts, and diplomatic professionals to create the first objective credibility system for high-stakes networks.
+            </p>
+            <a href="#waitlist" class="hero-cta">Join Waitlist</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <h2 class="section-title fade-up">Built by Experts, Designed for Excellence</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card fade-up">
+                    <div class="feature-icon">◯</div>
+                    <h3 class="feature-title">AI-Powered Assessment</h3>
+                    <p class="feature-description">
+                        Our team of AI ethics researchers developed algorithms that analyze network behavior patterns to generate unbiased credibility scores.
+                    </p>
+                </div>
+                
+                <div class="feature-card fade-up">
+                    <div class="feature-icon">◆</div>
+                    <h3 class="feature-title">Blockchain Security</h3>
+                    <p class="feature-description">
+                        Blockchain governance specialists designed a tamper-resistant architecture that ensures data integrity while preserving privacy.
+                    </p>
+                </div>
+                
+                <div class="feature-card fade-up">
+                    <div class="feature-icon">◇</div>
+                    <h3 class="feature-title">Cultural Intelligence</h3>
+                    <p class="feature-description">
+                        Diplomatic process experts ensure the system adapts to different cultural contexts and professional environments.
+                    </p>
+                </div>
+                
+                <div class="feature-card fade-up">
+                    <div class="feature-icon">△</div>
+                    <h3 class="feature-title">Game Theory Design</h3>
+                    <p class="feature-description">
+                        Behavioral economists crafted incentive structures that encourage authentic networking while preventing manipulation.
+                    </p>
+                </div>
+                
+                <div class="feature-card fade-up">
+                    <div class="feature-icon">□</div>
+                    <h3 class="feature-title">Universal Protocol</h3>
+                    <p class="feature-description">
+                        Academic research institutions provide cutting-edge insights to create a system that integrates with any professional network.
+                    </p>
+                </div>
+                
+                <div class="feature-card fade-up">
+                    <div class="feature-icon">◈</div>
+                    <h3 class="feature-title">Hybrid Intelligence</h3>
+                    <p class="feature-description">
+                        Specialized consulting firms help balance AI efficiency with human oversight for optimal decision-making.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem">
+        <div class="problem-container">
+            <h2 class="problem-title fade-up">Reimagining Professional Credibility</h2>
+            <p class="problem-text fade-up">
+                Our team of AI researchers, blockchain governance specialists, and diplomatic process experts recognized a fundamental flaw in how trust is measured in professional networks.
+            </p>
+            <p class="problem-text fade-up">
+                Traditional rating systems fail in high-stakes environments—they're easily manipulated, culturally biased, and create more problems than they solve.
+            </p>
+            <p class="problem-highlight fade-up">
+                What if we could measure trust objectively through authentic network behavior?
+            </p>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases" id="use-cases">
+        <div class="use-cases-container">
+            <h2 class="section-title fade-up">Pioneered in the World's Most Critical Networks</h2>
+            <p class="fade-up" style="text-align: center; font-size: 1.2rem; color: #86868b; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                Our multidisciplinary team is launching TRUOS in environments where trust isn't just important—it's essential for global cooperation and decision-making.
+            </p>
+            
+            <div class="use-cases-grid">
+                <div class="use-case-card fade-up">
+                    <div class="use-case-icon">◯</div>
+                    <h3 class="use-case-title">International Organizations</h3>
+                    <p class="use-case-description">
+                        Diplomatic networks where influence and credibility determine the success of global initiatives and multilateral negotiations.
+                    </p>
+                </div>
+                
+                <div class="use-case-card fade-up">
+                    <div class="use-case-icon">◆</div>
+                    <h3 class="use-case-title">Executive Networks</h3>
+                    <p class="use-case-description">
+                        C-suite and board-level networks where strategic partnerships require objective credibility assessment beyond traditional recommendations.
+                    </p>
+                </div>
+                
+                <div class="use-case-card fade-up">
+                    <div class="use-case-icon">◇</div>
+                    <h3 class="use-case-title">Research Communities</h3>
+                    <p class="use-case-description">
+                        Academic and scientific networks where collaboration patterns reveal credibility more accurately than traditional metrics.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Waitlist Section -->
+    <section class="waitlist" id="waitlist">
+        <div class="waitlist-container">
+            <h2 class="waitlist-title fade-up">Join the Trust Revolution</h2>
+            <p class="waitlist-subtitle fade-up">
+                Our expert consortium is launching exclusive pilot programs for select professional networks. Be part of the future of objective credibility assessment.
+            </p>
+            
+            <form class="waitlist-form fade-up" id="waitlistForm" action="https://formsubmit.co/info@truos.io" method="POST">
+                <!-- FormSubmit configuration -->
+                <input type="hidden" name="_subject" value="TRUOS Waitlist Application">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_next" value="https://truos.io/thank-you">
+                <input type="hidden" name="_captcha" value="false">
+                
+                <div class="form-group">
+                    <label class="form-label" for="name">Full Name *</label>
+                    <input type="text" class="form-input" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address *</label>
+                    <input type="email" class="form-input" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="organization">Organization *</label>
+                    <input type="text" class="form-input" id="organization" name="organization" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="role">Professional Role *</label>
+                    <input type="text" class="form-input" id="role" name="role" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="network-type">Network Type *</label>
+                    <select class="form-select" id="network-type" name="network_type" required>
+                        <option value="">Select your network type</option>
+                        <option value="diplomatic">International Organizations</option>
+                        <option value="executive">Executive/Corporate</option>
+                        <option value="academic">Academic/Research</option>
+                        <option value="nonprofit">Nonprofit/NGO</option>
+                        <option value="professional">Professional Association</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="use-case">Primary Use Case</label>
+                    <input type="text" class="form-input" id="use-case" name="use_case" placeholder="How would you use TRUOS?">
+                </div>
+                
+                <button type="submit" class="submit-button">Join Waitlist</button>
+                
+                <div class="success-message" id="successMessage">
+                    Thank you! You've been added to our waitlist.
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">
+                © 2025 TRUOS Universal Trust Protocol. All rights reserved.
+            </p>
+            <p class="footer-text" style="margin-top: 1rem; font-size: 0.9rem;">
+                4040 NE 2nd Ave, Miami FL 33137
+            </p>
+            <p class="footer-text" style="margin-top: 1.5rem; font-size: 0.85rem; line-height: 1.4;">
+                This website and its content are protected by copyright and other intellectual property laws. 
+                TRUOS and Universal Trust Protocol are trademarks of TRUOS Universal Trust Protocol. 
+                All product names, logos, and brands are property of their respective owners.
+            </p>
+            <p class="footer-text" style="margin-top: 1rem; font-size: 0.85rem;">
+                <a href="#" class="footer-link">Privacy Policy</a> • 
+                <a href="#" class="footer-link">Terms of Service</a> • 
+                <a href="#" class="footer-link">Cookie Policy</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling with better targeting
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                console.log('Clicked link with href:', this.getAttribute('href')); // Debug log
+                
+                const targetId = this.getAttribute('href');
+                const target = document.querySelector(targetId);
+                
+                if (target) {
+                    console.log('Found target element:', target); // Debug log
+                    const offsetTop = target.offsetTop - 100; // Account for fixed nav
+                    
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    console.log('Target not found for:', targetId); // Debug log
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navigation background on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.borderBottom = '1px solid rgba(0, 0, 0, 0.1)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.8)';
+                nav.style.borderBottom = '1px solid rgba(0, 0, 0, 0.05)';
+            }
+        });
+
+        // Enhanced form handling with actual submission
+        document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+            // Let the form submit naturally, but add visual feedback
+            const submitButton = document.querySelector('.submit-button');
+            const originalText = submitButton.textContent;
+            
+            // Clear previous error states
+            document.querySelectorAll('.form-input, .form-select').forEach(input => {
+                input.style.borderColor = '';
+            });
+            
+            // Remove existing error message
+            const existingError = document.querySelector('.error-message');
+            if (existingError) {
+                existingError.remove();
+            }
+            
+            // Basic client-side validation (HTML5 will also validate)
+            const requiredFields = document.querySelectorAll('[required]');
+            let hasErrors = false;
+            const errorFields = [];
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = '#ff3b30';
+                    field.style.borderWidth = '2px';
+                    hasErrors = true;
+                    const labelText = field.previousElementSibling.textContent.replace(' *', '');
+                    errorFields.push(labelText);
+                }
+            });
+            
+            // Email validation
+            const emailField = document.getElementById('email');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailField.value.trim() && !emailRegex.test(emailField.value.trim())) {
+                emailField.style.borderColor = '#ff3b30';
+                emailField.style.borderWidth = '2px';
+                hasErrors = true;
+                if (!errorFields.includes('Email Address')) {
+                    errorFields.push('Email Address (invalid format)');
+                }
+            }
+            
+            if (hasErrors) {
+                e.preventDefault(); // Stop form submission
+                
+                // Create and show error message
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'error-message';
+                errorMessage.innerHTML = `
+                    <strong>Please fix the following errors:</strong><br>
+                    • ${errorFields.join('<br>• ')}
+                `;
+                
+                const form = document.querySelector('.waitlist-form');
+                form.insertBefore(errorMessage, form.firstChild);
+                
+                // Scroll to first error field
+                const firstErrorField = document.querySelector('.form-input[style*="border-color: rgb(255, 59, 48)"], .form-select[style*="border-color: rgb(255, 59, 48)"]');
+                if (firstErrorField) {
+                    firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstErrorField.focus();
+                }
+                
+                return;
+            }
+            
+            // If validation passes, show loading state
+            submitButton.textContent = 'Submitting...';
+            submitButton.disabled = true;
+            
+            // Note: Form will submit naturally to FormSubmit
+            // FormSubmit will handle the actual email sending
+        });
+        
+        // Clear error styling when user starts typing
+        document.querySelectorAll('.form-input, .form-select').forEach(input => {
+            input.addEventListener('input', function() {
+                this.style.borderColor = '';
+                this.style.borderWidth = '';
+                
+                // Remove error message if it exists
+                const errorMessage = document.querySelector('.error-message');
+                if (errorMessage) {
+                    errorMessage.remove();
+                }
+            });
+        });
+
+        // Parallax effect for network elements
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            
+            // Parallax for network nodes
+            const networkNodes = document.querySelectorAll('.network-node');
+            networkNodes.forEach((node, index) => {
+                const speed = 0.2 + (index * 0.1);
+                const yPos = -(scrolled * speed);
+                node.style.transform = `translate3d(0, ${yPos}px, 0)`;
+            });
+            
+            // Parallax for connection lines
+            const connectionLines = document.querySelectorAll('.connection-line');
+            connectionLines.forEach((line, index) => {
+                const speed = 0.1 + (index * 0.05);
+                const yPos = -(scrolled * speed);
+                line.style.transform = `translate3d(0, ${yPos}px, 0) rotate(${line.style.transform.match(/rotate\([^)]*\)/)?.[0] || '0deg'})`;
+            });
+        });
+    </script>
+</body>
+</html>
