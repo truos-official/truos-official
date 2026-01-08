@@ -1,0 +1,2106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EU AI Act Governance Playbook - Enterprise Risk Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 11px;
+            line-height: 1.5;
+            color: #1a1a1a;
+            background: #ffffff;
+        }
+        
+        .header {
+            background: #000;
+            color: #fff;
+            padding: 15px 20px;
+            border-bottom: 3px solid #333;
+        }
+        
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 10px;
+            opacity: 0.85;
+        }
+        
+        .main-nav {
+            background: #2c2c2c;
+            border-bottom: 2px solid #000;
+        }
+        
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .main-nav li {
+            flex: 1;
+        }
+        
+        .main-nav a, .main-nav span {
+            display: block;
+            padding: 12px 20px;
+            color: #fff;
+            text-decoration: none;
+            border-right: 1px solid #444;
+            font-size: 11px;
+            font-weight: 500;
+            text-align: center;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+        
+        .main-nav a:hover, .main-nav span:hover {
+            background: #3a3a3a;
+        }
+        
+        .main-nav a.active, .main-nav span.active {
+            background: #fff;
+            color: #000;
+            font-weight: 600;
+        }
+        
+        .sub-nav {
+            background: #f5f5f5;
+            border-bottom: 1px solid #d0d0d0;
+            overflow-x: auto;
+            white-space: nowrap;
+            display: none;
+        }
+        
+        .sub-nav.active {
+            display: block;
+        }
+        
+        .sub-nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .sub-nav a, .sub-nav span {
+            display: block;
+            padding: 10px 16px;
+            color: #333;
+            text-decoration: none;
+            border-right: 1px solid #d0d0d0;
+            font-size: 10px;
+            font-weight: 500;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+        
+        .sub-nav a:hover, .sub-nav span:hover {
+            background: #e8e8e8;
+        }
+        
+        .sub-nav a.active, .sub-nav span.active {
+            background: #000;
+            color: #fff;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 25px;
+        }
+        
+        .section-content {
+            display: none;
+        }
+        
+        .section-content.active {
+            display: block;
+        }
+        
+        .page-header {
+            border-bottom: 2px solid #000;
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .page-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        
+        .page-header .description {
+            font-size: 11px;
+            color: #555;
+        }
+        
+        .content-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 12px;
+            background: #f0f0f0;
+            border-left: 4px solid #000;
+            margin-bottom: 15px;
+        }
+        
+        .info-box {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-left: 3px solid #666;
+            padding: 12px;
+            margin: 15px 0;
+            font-size: 10px;
+        }
+        
+        .info-box.highlight {
+            background: #fffbf0;
+            border-left-color: #f59e0b;
+        }
+        
+        .info-box strong {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 11px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-right: 5px;
+        }
+        
+        .badge-azure {
+            background: #0078d4;
+            color: #fff;
+        }
+        
+        .badge-copilot {
+            background: #7c3aed;
+            color: #fff;
+        }
+        
+        .badge-eu {
+            background: #1976d2;
+            color: #fff;
+        }
+        
+        .badge-critical {
+            background: #d32f2f;
+            color: #fff;
+        }
+        
+        .badge-high {
+            background: #f57c00;
+            color: #fff;
+        }
+        
+        .badge-medium {
+            background: #fbc02d;
+            color: #000;
+        }
+        
+        .badge-low {
+            background: #e0e0e0;
+            color: #555;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+            margin: 15px 0;
+            background: #fff;
+        }
+        
+        th {
+            background: #f0f0f0;
+            border: 1px solid #d0d0d0;
+            padding: 8px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 10px;
+        }
+        
+        td {
+            border: 1px solid #e0e0e0;
+            padding: 8px;
+            vertical-align: top;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        .step-list {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+        
+        .step-item {
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #e0e0e0;
+            background: #fafafa;
+            position: relative;
+            padding-left: 50px;
+        }
+        
+        .step-item::before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            background: #000;
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+        
+        .step-details {
+            font-size: 10px;
+            color: #555;
+            margin-top: 5px;
+        }
+        
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .tool-card {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            padding: 12px;
+        }
+        
+        .tool-name {
+            font-weight: 600;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+        
+        .tool-purpose {
+            color: #666;
+            font-size: 10px;
+            margin-bottom: 5px;
+        }
+        
+        .tool-controls {
+            font-size: 9px;
+            color: #1976d2;
+            margin-top: 5px;
+        }
+        
+        .comparison-table {
+            margin: 20px 0;
+        }
+        
+        .comparison-table td:first-child {
+            font-weight: 600;
+            background: #f9f9f9;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-label {
+            font-size: 10px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #000;
+        }
+        
+        .control-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 15px;
+            padding: 12px;
+        }
+        
+        .control-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .control-id {
+            font-weight: 600;
+            font-size: 11px;
+            color: #1976d2;
+        }
+        
+        .control-name {
+            font-weight: 600;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+        
+        .control-purpose {
+            font-size: 10px;
+            color: #555;
+            margin-bottom: 8px;
+        }
+        
+        .control-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 10px;
+        }
+        
+        .control-detail-label {
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        
+        .print-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 16px;
+            background: #000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .print-btn:hover {
+            background: #333;
+        }
+
+        @media print {
+            .main-nav, .sub-nav, .print-btn {
+                display: none;
+            }
+            .section-content {
+                display: block !important;
+                page-break-after: always;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Main navigation click handlers
+            var mainNavLinks = document.querySelectorAll('.main-nav-link');
+            mainNavLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    var section = this.getAttribute('data-section');
+                    showMainSection(section, this);
+                });
+            });
+            
+            // Sub navigation click handlers
+            var subNavLinks = document.querySelectorAll('.sub-nav-link');
+            subNavLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    var mainSection = this.getAttribute('data-main');
+                    var subSection = this.getAttribute('data-sub');
+                    showSubSection(mainSection, subSection, this);
+                });
+            });
+        });
+        
+        function showMainSection(section, element) {
+            // Hide all sub-navs
+            var allSubNavs = document.querySelectorAll('.sub-nav');
+            allSubNavs.forEach(function(nav) {
+                nav.classList.remove('active');
+            });
+            
+            // Show appropriate sub-nav
+            if (section === 'azure' || section === 'copilot' || section === 'summary') {
+                var subnav = document.getElementById(section + '-subnav');
+                if (subnav) {
+                    subnav.classList.add('active');
+                }
+            }
+            
+            // Update main nav active state
+            var allMainLinks = document.querySelectorAll('.main-nav-link');
+            allMainLinks.forEach(function(link) {
+                link.classList.remove('active');
+            });
+            if (element) {
+                element.classList.add('active');
+            }
+            
+            // Hide all section content
+            var allContent = document.querySelectorAll('.section-content');
+            allContent.forEach(function(content) {
+                content.classList.remove('active');
+            });
+            
+            // Show appropriate section based on main section selected
+            var sectionElement = null;
+            if (section === 'overview') {
+                sectionElement = document.getElementById('overview-content');
+            } else if (section === 'azure') {
+                sectionElement = document.getElementById('azure-planning');
+                // Reset sub-nav to first item
+                var azureSubLinks = document.querySelectorAll('#azure-subnav .sub-nav-link');
+                azureSubLinks.forEach(function(link) {
+                    link.classList.remove('active');
+                });
+                if (azureSubLinks.length > 0) {
+                    azureSubLinks[0].classList.add('active');
+                }
+            } else if (section === 'copilot') {
+                sectionElement = document.getElementById('copilot-intro');
+                // Reset sub-nav to first item
+                var copilotSubLinks = document.querySelectorAll('#copilot-subnav .sub-nav-link');
+                copilotSubLinks.forEach(function(link) {
+                    link.classList.remove('active');
+                });
+                if (copilotSubLinks.length > 0) {
+                    copilotSubLinks[0].classList.add('active');
+                }
+            } else if (section === 'summary') {
+                sectionElement = document.getElementById('summary-controls');
+                // Reset sub-nav to first item
+                var summarySubLinks = document.querySelectorAll('#summary-subnav .sub-nav-link');
+                summarySubLinks.forEach(function(link) {
+                    link.classList.remove('active');
+                });
+                if (summarySubLinks.length > 0) {
+                    summarySubLinks[0].classList.add('active');
+                }
+            }
+            
+            if (sectionElement) {
+                sectionElement.classList.add('active');
+            }
+        }
+        
+        function showSubSection(mainSection, subSection, element) {
+            // Update sub-nav active state
+            var subnav = document.getElementById(mainSection + '-subnav');
+            if (subnav) {
+                var subLinks = subnav.querySelectorAll('.sub-nav-link');
+                subLinks.forEach(function(link) {
+                    link.classList.remove('active');
+                });
+            }
+            if (element) {
+                element.classList.add('active');
+            }
+            
+            // Hide all section content
+            var allContent = document.querySelectorAll('.section-content');
+            allContent.forEach(function(content) {
+                content.classList.remove('active');
+            });
+            
+            // Show selected sub-section
+            var sectionId = mainSection + '-' + subSection;
+            var section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.add('active');
+            }
+        }
+        
+        function printPage() {
+            window.print();
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h1>EU AI Act Governance Readiness Playbook</h1>
+        <p>Enterprise Risk Management | 25 EU AI Act Controls | Azure AI Solutions & Microsoft Copilot Studio</p>
+    </div>
+
+    <nav class="main-nav">
+        <ul>
+            <li><span class="main-nav-link active" data-section="overview">Overview</span></li>
+            <li><span class="main-nav-link" data-section="azure">Azure AI Assessment</span></li>
+            <li><span class="main-nav-link" data-section="copilot">Copilot Studio Assessment</span></li>
+            <li><span class="main-nav-link" data-section="summary">Summary & Reference</span></li>
+        </ul>
+    </nav>
+
+    <!-- Azure AI Sub-Navigation -->
+    <nav class="sub-nav" id="azure-subnav">
+        <ul>
+            <li><span class="sub-nav-link active" data-main="azure" data-sub="planning">Planning</span></li>
+            <li><span class="sub-nav-link" data-main="azure" data-sub="infrastructure">IT Infrastructure</span></li>
+            <li><span class="sub-nav-link" data-main="azure" data-sub="workstation">Workstation Setup</span></li>
+            <li><span class="sub-nav-link" data-main="azure" data-sub="tools">Tool Installation</span></li>
+            <li><span class="sub-nav-link" data-main="azure" data-sub="configuration">Azure Config</span></li>
+            <li><span class="sub-nav-link" data-main="azure" data-sub="execution">Assessment Execution</span></li>
+        </ul>
+    </nav>
+
+    <!-- Copilot Studio Sub-Navigation -->
+    <nav class="sub-nav" id="copilot-subnav">
+        <ul>
+            <li><span class="sub-nav-link active" data-main="copilot" data-sub="intro">Introduction</span></li>
+            <li><span class="sub-nav-link" data-main="copilot" data-sub="setup">Setup Requirements</span></li>
+            <li><span class="sub-nav-link" data-main="copilot" data-sub="assessment">Assessment Process</span></li>
+            <li><span class="sub-nav-link" data-main="copilot" data-sub="compliance">Compliance Testing</span></li>
+        </ul>
+    </nav>
+
+    <!-- Summary Sub-Navigation -->
+    <nav class="sub-nav" id="summary-subnav">
+        <ul>
+            <li><span class="sub-nav-link active" data-main="summary" data-sub="controls">EU AI Controls</span></li>
+            <li><span class="sub-nav-link" data-main="summary" data-sub="resources">Technical Resources</span></li>
+            <li><span class="sub-nav-link" data-main="summary" data-sub="risks">Risk Assessment Overview</span></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- OVERVIEW SECTION -->
+        <div class="section-content active" id="overview-content">
+            <div class="page-header">
+                <h2>EU AI Act Governance Assessment Program</h2>
+                <p class="description">Enterprise risk management framework for AI systems compliance with EU AI Act, ISO 42001, and NIST AI RMF</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">EU AI Act Controls</div>
+                    <div class="stat-value">25</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Assessment Tracks</div>
+                    <div class="stat-value">2</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Core Assessment Tools</div>
+                    <div class="stat-value">18+</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Compliance Frameworks</div>
+                    <div class="stat-value">3</div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Program Overview</div>
+                <p style="margin-bottom: 15px;">This playbook provides comprehensive guidance for Enterprise Risk Management professionals conducting technical risk assessments of AI systems to ensure compliance with the EU AI Act, ISO 42001, and NIST AI Risk Management Framework.</p>
+
+                <div class="info-box highlight">
+                    <strong>Who This Is For:</strong>
+                    Enterprise AI Risk Assessors, Compliance Officers, Risk Management Professionals, AI Governance Teams. Note: This guide assumes you are NOT a Tenant Administrator and will need to request infrastructure resources from IT.
+                </div>
+
+                <div class="info-box">
+                    <strong>Target Industries:</strong>
+                    Fintech, Financial Services, Industrial sectors - particularly organizations deploying high-risk AI systems as defined by EU AI Act Annex III.
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Two Assessment Tracks</div>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Aspect</th>
+                            <th style="width: 40%"><span class="badge badge-azure">Azure AI Solutions</span> Full Governance Track</th>
+                            <th style="width: 40%"><span class="badge badge-copilot">Copilot Studio</span> Fast-Track Governance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Use Cases</strong></td>
+                            <td>Custom agentic AI, in-house LLMs/SLMs, complex ML models, high-risk classification systems</td>
+                            <td>Low-code agentic AI, Copilot agents, business automation, conversational AI</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Infrastructure</strong></td>
+                            <td>Dedicated Azure subscription, OpenAI Service, ML Workspace, GPU compute, Purview, extensive tooling</td>
+                            <td>Copilot Studio license, Power Platform environment, minimal additional infrastructure</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Setup Time</strong></td>
+                            <td>2-4 weeks (full infrastructure provisioning)</td>
+                            <td>3-5 days (primarily licensing and access)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Monthly Cost</strong></td>
+                            <td>$3,700 - $8,600 (Azure services + tools)</td>
+                            <td>$800 - $2,500 (licenses + limited tools)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tool Complexity</strong></td>
+                            <td>18+ specialized tools (Garak, PyRIT, MLflow, Evidently, etc.)</td>
+                            <td>6-8 essential tools (simplified testing suite)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Security Testing</strong></td>
+                            <td>Full adversarial testing, custom red teaming, deep penetration testing</td>
+                            <td>Managed security testing, built-in safeguards validation, configuration review</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Governance</strong></td>
+                            <td>Azure Purview, custom lineage mapping, extensive PII scanning</td>
+                            <td>Power Platform DLP, built-in compliance features, connector governance</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EU Control Coverage</strong></td>
+                            <td>All 25 controls with deep technical validation</td>
+                            <td>All 25 controls with configuration-based validation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Best For</strong></td>
+                            <td>Custom AI development, high-risk systems, complex architectures, advanced ML</td>
+                            <td>Business users building copilots, low-code solutions, rapid deployment, managed services</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Assessment Program Objectives</div>
+                <ul class="step-list">
+                    <li class="step-item">
+                        <div class="step-title">Compliance Verification</div>
+                        <div class="step-details">Validate adherence to all 25 EU AI Act control requirements (Articles 9-67) with documented evidence for conformity assessment.</div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Risk Identification & Mitigation</div>
+                        <div class="step-details">Identify technical risks across security, privacy, bias, performance, and safety domains. Develop mitigation strategies.</div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Continuous Monitoring</div>
+                        <div class="step-details">Establish production monitoring for drift detection, performance degradation, security threats, and incident response.</div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Documentation & Reporting</div>
+                        <div class="step-details">Generate comprehensive assessment reports, model cards, risk registers, and conformity declarations for regulatory submission.</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Regulatory Framework Alignment</div>
+                <div class="tool-grid">
+                    <div class="tool-card">
+                        <div class="tool-name">EU AI Act (Regulation 2024/1689)</div>
+                        <div class="tool-purpose">Primary regulatory framework. Covers risk management (Art. 9), data governance (Art. 10), transparency (Art. 13), human oversight (Art. 14), accuracy/robustness (Art. 15), and conformity assessment (Art. 43-48).</div>
+                        <div class="tool-controls">High-Risk Systems: Annex III | 10-Year Log Retention: Art. 12 | €35M Max Penalties</div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-name">ISO/IEC 42001:2023</div>
+                        <div class="tool-purpose">AI Management System standard. Provides framework for responsible development and use of AI systems. Covers risk assessment (6.1), lifecycle management (8.2), and monitoring (9.1).</div>
+                        <div class="tool-controls">Certification Body Audits | Management System Requirements</div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-name">NIST AI Risk Management Framework</div>
+                        <div class="tool-purpose">US framework with international adoption. Four core functions: GOVERN, MAP, MEASURE, MANAGE. Provides risk assessment methodology and control mapping.</div>
+                        <div class="tool-controls">Voluntary Framework | Industry Best Practices</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Getting Started</div>
+                <div class="info-box">
+                    <strong>Choose Your Assessment Track:</strong>
+                    Navigate to "Azure AI Assessment" for comprehensive infrastructure-based assessments of custom AI solutions, or "Copilot Studio Assessment" for fast-track governance of low-code agentic AI built in Microsoft Copilot Studio.
+                </div>
+                <div class="info-box">
+                    <strong>Reference Materials:</strong>
+                    Visit the "Summary & Reference" section for detailed EU AI Act control catalog, complete technical resource inventory, and risk assessment methodology.
+                </div>
+            </div>
+        </div>
+
+        <!-- AZURE AI ASSESSMENT SECTIONS -->
+        <!-- Azure sections continue with IDs: azure-planning, azure-infrastructure, azure-workstation, azure-tools, azure-configuration, azure-execution -->
+        <div class="section-content" id="azure-planning">
+            <div class="page-header">
+                <h2><span class="badge badge-azure">Azure AI</span> Phase 1: Planning & Preparation</h2>
+                <p class="description">Define scope, secure approvals, and prepare for infrastructure requests</p>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Assessment Scope Definition</div>
+                <ul class="step-list">
+                    <li class="step-item">
+                        <div class="step-title">Identify AI Systems in Scope</div>
+                        <div class="step-details">
+                            <strong>Azure OpenAI Deployments:</strong> GPT-4, GPT-3.5-turbo, custom fine-tuned models<br>
+                            <strong>Azure ML Models:</strong> Classification, regression, clustering models<br>
+                            <strong>Agentic Systems:</strong> LangChain agents, AutoGPT, custom agent frameworks<br>
+                            <strong>Custom LLMs/SLMs:</strong> Self-hosted or Azure-deployed language models
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Classify AI Systems by EU Risk Tier</div>
+                        <div class="step-details">
+                            <strong>High-Risk (Annex III):</strong> Credit scoring, employment decisions, critical infrastructure, law enforcement, biometric identification<br>
+                            <strong>Limited-Risk:</strong> Chatbots with transparency obligations<br>
+                            <strong>Minimal-Risk:</strong> Spam filters, inventory management
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Map Stakeholders</div>
+                        <div class="step-details">
+                            <strong>Approvers:</strong> Azure Platform Team, IT Infrastructure, Security Team, Compliance Officer, Budget Approvers<br>
+                            <strong>Collaborators:</strong> Model developers, data scientists, business owners, legal counsel<br>
+                            <strong>Governance:</strong> AI Ethics Board, Risk Committee, Audit Team
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Budget & Resource Planning</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Resource Category</th>
+                            <th>Monthly Cost Estimate</th>
+                            <th>Justification</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Azure OpenAI (Testing)</td>
+                            <td>$500 - $1,500</td>
+                            <td>Security testing requires 1000+ adversarial queries per assessment (EU-07)</td>
+                        </tr>
+                        <tr>
+                            <td>Azure ML Workspace + Compute</td>
+                            <td>$1,000 - $2,000</td>
+                            <td>Model versioning, experiment tracking, conformity assessment (EU-03, EU-09)</td>
+                        </tr>
+                        <tr>
+                            <td>GPU VM (Adversarial Testing)</td>
+                            <td>$300 - $500</td>
+                            <td>Adversarial robustness testing required by EU Article 15</td>
+                        </tr>
+                        <tr>
+                            <td>Azure Storage (WORM, 10-year)</td>
+                            <td>$100 - $200</td>
+                            <td>Immutable log storage mandated by EU Article 12</td>
+                        </tr>
+                        <tr>
+                            <td>Azure Purview</td>
+                            <td>$500 - $800</td>
+                            <td>Data governance and lineage tracking (EU-02, EU-10)</td>
+                        </tr>
+                        <tr>
+                            <td>Application Insights + Monitor</td>
+                            <td>$600 - $1,300</td>
+                            <td>Comprehensive logging and 10-year retention (EU-04, EU-08)</td>
+                        </tr>
+                        <tr>
+                            <td>LangSmith (Agentic AI)</td>
+                            <td>$500 - $2,000</td>
+                            <td>Agent tracing required for EU-04, EU-06, EU-17 compliance</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total</strong></td>
+                            <td><strong>$3,500 - $8,300/month</strong></td>
+                            <td>Regulatory compliance program</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Program Timeline</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 15%">Timeframe</th>
+                            <th>Activities</th>
+                            <th>Deliverables</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Week 1</strong></td>
+                            <td>Submit IT infrastructure request, secure budget approval, workstation setup</td>
+                            <td>Approved IT ticket, budget confirmation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Weeks 2-3</strong></td>
+                            <td>IT provisions Azure resources, install local tools, configure authentication</td>
+                            <td>Access credentials, tool installations complete</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Week 4</strong></td>
+                            <td>Test connectivity, run first security scans, configure monitoring</td>
+                            <td>First Garak scan, MLflow operational</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Month 2+</strong></td>
+                            <td>Monthly assessments, quarterly compliance reviews, continuous monitoring</td>
+                            <td>Assessment reports, EU control evidence</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section-content" id="azure-infrastructure">
+            <div class="page-header">
+                <h2><span class="badge badge-azure">Azure AI</span> Phase 2: IT Infrastructure Request</h2>
+                <p class="description">Detailed resource requirements for Azure Platform Team</p>
+            </div>
+            <div class="content-section">
+                <div class="section-title">Priority 1: Critical Resources</div>
+                <p style="margin-bottom: 10px;">Submit these requests immediately - 2-3 week lead time required. See Planning phase for complete details.</p>
+                <div class="info-box">
+                    <strong>Key Infrastructure Requests:</strong> Azure testing subscription/RG, Azure OpenAI Service, Azure ML Workspace, Service Principal, Assessment VM, Azure Storage (WORM), Azure Purview, Application Insights, Azure Monitor Logs, Network/VPN access.
+                </div>
+            </div>
+        </div>
+
+        <div class="section-content" id="azure-workstation">
+            <div class="page-header">
+                <h2><span class="badge badge-azure">Azure AI</span> Phase 3: Workstation Setup</h2>
+                <p class="description">Configure your local development environment</p>
+            </div>
+            <div class="content-section">
+                <div class="section-title">Essential Software</div>
+                <p style="margin-bottom: 10px;">Install while waiting for Azure infrastructure provisioning.</p>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li>Azure CLI - Authentication and resource management</li>
+                    <li>Python 3.10+ - Create virtual environment for assessment tools</li>
+                    <li>Visual Studio Code - Script development and notebooks</li>
+                    <li>Git - Version control</li>
+                    <li>Docker Desktop (optional) - Containerized tools</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-content" id="azure-tools">
+            <div class="page-header">
+                <h2><span class="badge badge-azure">Azure AI</span> Phase 4: Tool Installation</h2>
+                <p class="description">Install security, performance, and compliance testing tools</p>
+            </div>
+            <div class="content-section">
+                <div class="section-title">Week 1: Critical Tools</div>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong>Garak</strong> - pip install garak (LLM vulnerability scanner)</li>
+                    <li><strong>PyRIT</strong> - pip install pyrit (Microsoft red teaming)</li>
+                    <li><strong>MLflow</strong> - pip install mlflow azureml-mlflow (experiment tracking)</li>
+                    <li><strong>DeepEval</strong> - pip install deepeval (LLM testing)</li>
+                    <li><strong>Evidently</strong> - pip install evidently (drift detection)</li>
+                    <li><strong>LangSmith</strong> - Sign up at smith.langchain.com (agentic AI tracing)</li>
+                </ul>
+            </div>
+            <div class="content-section">
+                <div class="section-title">Week 2-3: Additional Tools</div>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong>Fairlearn</strong> - pip install fairlearn (bias testing)</li>
+                    <li><strong>Presidio</strong> - pip install presidio-analyzer presidio-anonymizer (PII detection)</li>
+                    <li><strong>SHAP & LIME</strong> - pip install shap lime (explainability)</li>
+                    <li><strong>Azure SDKs</strong> - pip install azure-ai-ml azure-identity azure-storage-blob</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-content" id="azure-configuration">
+            <div class="page-header">
+                <h2><span class="badge badge-azure">Azure AI</span> Phase 5: Azure Configuration</h2>
+                <p class="description">Configure and verify access to all Azure services</p>
+            </div>
+            <div class="content-section">
+                <div class="section-title">Configuration Checklist</div>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li>Authenticate Azure CLI: az login</li>
+                    <li>Verify Azure OpenAI endpoint access and list deployments</li>
+                    <li>Connect to Azure ML Workspace and access model registry</li>
+                    <li>Access Azure Purview catalog and review data lineage</li>
+                    <li>Verify WORM storage configuration (10-year retention)</li>
+                    <li>Access Application Insights and Azure Monitor Logs</li>
+                    <li>Set up LangSmith project for agentic AI tracing</li>
+                    <li>Store all credentials in .env file (never commit to Git)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-content" id="azure-execution">
+            <div class="page-header">
+                <h2><span class="badge badge-azure">Azure AI</span> Phase 6: Assessment Execution</h2>
+                <p class="description">Conduct technical risk assessments on AI systems</p>
+            </div>
+            <div class="content-section">
+                <div class="section-title">Monthly Assessment Workflow</div>
+                <p style="margin-bottom: 15px;"><strong>Week 1: Discovery & Security Testing</strong></p>
+                <ul style="margin-left: 20px; line-height: 1.8; margin-bottom: 15px;">
+                    <li>Query Azure ML model registry for systems to assess</li>
+                    <li>Run Garak security scan on all Azure OpenAI deployments</li>
+                    <li>Execute PyRIT red team campaign on high-risk models</li>
+                    <li>Test agentic systems for tool access control violations</li>
+                </ul>
+                <p style="margin-bottom: 15px;"><strong>Week 2: Performance & Bias Testing</strong></p>
+                <ul style="margin-left: 20px; line-height: 1.8; margin-bottom: 15px;">
+                    <li>DeepEval hallucination testing for LLMs</li>
+                    <li>Agent reasoning validation using LangSmith traces</li>
+                    <li>Fairness testing on classification models (Fairlearn)</li>
+                    <li>Performance metrics validation in MLflow</li>
+                </ul>
+                <p style="margin-bottom: 15px;"><strong>Week 3: Privacy & Explainability</strong></p>
+                <ul style="margin-left: 20px; line-height: 1.8; margin-bottom: 15px;">
+                    <li>Presidio PII scanning on training data and outputs</li>
+                    <li>Azure Purview data lineage audit</li>
+                    <li>SHAP/LIME explainability analysis</li>
+                    <li>Evidently drift detection on production data</li>
+                </ul>
+                <p style="margin-bottom: 15px;"><strong>Week 4: Documentation & Reporting</strong></p>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li>Update model cards and technical documentation</li>
+                    <li>Compile evidence for all 25 EU AI Act controls</li>
+                    <li>Generate assessment report with risk ratings</li>
+                    <li>Log findings in Azure DevOps, present to stakeholders</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- COPILOT STUDIO ASSESSMENT SECTIONS -->
+        <div class="section-content" id="copilot-intro">
+            <div class="page-header">
+                <h2><span class="badge badge-copilot">Copilot Studio</span> Fast-Track Governance Introduction</h2>
+                <p class="description">Simplified assessment approach for low-code agentic AI solutions</p>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Copilot Studio Assessment Overview</div>
+                <div class="info-box highlight">
+                    <strong>When to Use This Track:</strong>
+                    Use the Copilot Studio assessment track when evaluating conversational AI agents built in Microsoft Copilot Studio (formerly Power Virtual Agents), including custom copilots, business automation agents, and customer service bots.
+                </div>
+
+                <p style="margin: 15px 0;">Microsoft Copilot Studio is a low-code platform for building conversational AI agents. Unlike custom Azure AI solutions, Copilot Studio provides managed services with built-in security, compliance features, and governance capabilities that simplify the assessment process.</p>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Key Differences from Azure AI Track</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%">Assessment Area</th>
+                            <th>Azure AI (Custom Solutions)</th>
+                            <th>Copilot Studio (Managed Platform)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Infrastructure Setup</strong></td>
+                            <td>Dedicated subscription, OpenAI service, ML workspace, GPU compute, Purview</td>
+                            <td>Copilot Studio license, Power Platform environment, minimal add-ons</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Security Testing</strong></td>
+                            <td>Custom red teaming with Garak, PyRIT; adversarial attack generation</td>
+                            <td>Configuration review, built-in content filter validation, connector security</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Governance</strong></td>
+                            <td>Azure Purview for full lineage mapping, custom PII scanning</td>
+                            <td>Power Platform DLP policies, built-in data connectors with pre-configured governance</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Monitoring</strong></td>
+                            <td>Custom MLflow, Evidently dashboards, Application Insights configuration</td>
+                            <td>Built-in Copilot Studio analytics, Power Platform Center of Excellence toolkit</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Explainability</strong></td>
+                            <td>SHAP, LIME analysis, custom reasoning traces</td>
+                            <td>Built-in conversation transcripts, topic analysis, automated summaries</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Logging</strong></td>
+                            <td>Custom Azure Monitor configuration, 10-year retention setup</td>
+                            <td>Dataverse for Teams with retention policies, built-in audit logs</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">EU AI Act Compliance in Copilot Studio</div>
+                <p style="margin-bottom: 15px;">All 25 EU AI Act controls still apply, but implementation differs:</p>
+                
+                <div class="tool-grid">
+                    <div class="tool-card">
+                        <div class="tool-name">Managed Security (EU-07, EU-18)</div>
+                        <div class="tool-purpose">Microsoft manages underlying infrastructure security. Assessment focuses on configuration validation rather than penetration testing.</div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-name">Built-in DLP (EU-15, EU-21)</div>
+                        <div class="tool-purpose">Power Platform DLP policies automatically prevent PII exposure through connectors. Assess policy configuration rather than building custom scanning.</div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-name">Transparency by Design (EU-05, EU-13)</div>
+                        <div class="tool-purpose">Copilot Studio includes built-in transparency features (system messages, AI disclosure). Validate configuration and user-facing documentation.</div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-name">Simplified Monitoring (EU-09)</div>
+                        <div class="tool-purpose">Built-in analytics dashboard provides conversation metrics, user satisfaction, topic performance. Less custom tooling required.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Assessment Scope: What to Evaluate</div>
+                <ul class="step-list">
+                    <li class="step-item">
+                        <div class="step-title">Copilot Configuration</div>
+                        <div class="step-details">Authentication settings, generative AI features enabled, topic design, entities and variables, fallback behavior, escalation paths</div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Data Connectors & Integrations</div>
+                        <div class="step-details">Power Automate flows, SharePoint connections, Dynamics 365 integrations, custom connectors, API permissions, OAuth scopes</div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Content & Knowledge Sources</div>
+                        <div class="step-details">SharePoint sites indexed, generative answers configuration, citation requirements, content freshness, data classification</div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Security & Access Controls</div>
+                        <div class="step-details">DLP policies applied, authentication requirements, role-based access, environment security, connector governance</div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">User Experience & Transparency</div>
+                        <div class="step-details">AI disclosure messages, system instructions visible to users, conversation handoff to humans, error handling, user feedback collection</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-content" id="copilot-setup">
+            <div class="page-header">
+                <h2><span class="badge badge-copilot">Copilot Studio</span> Setup Requirements</h2>
+                <p class="description">Minimal infrastructure and tooling for Copilot Studio assessments</p>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Required Licenses & Access</div>
+                <ul class="step-list">
+                    <li class="step-item">
+                        <div class="step-title">Copilot Studio License</div>
+                        <div class="step-details">
+                            <strong>Request from IT:</strong> Copilot Studio license ($200/user/month or consumption-based)<br>
+                            <strong>Access Level:</strong> At minimum "User" role to test copilots; "Admin" role preferred for full configuration review<br>
+                            <strong>Environment:</strong> Access to Production environment where copilots are deployed<br>
+                            <strong>Justification:</strong> Required to review copilot configuration, test conversations, access analytics (EU-01, EU-03)
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Power Platform Admin Center Access</div>
+                        <div class="step-details">
+                            <strong>Request from IT:</strong> Power Platform Administrator or Environment Admin role<br>
+                            <strong>Purpose:</strong> Review DLP policies, environment settings, connector governance, audit logs<br>
+                            <strong>Justification:</strong> Required for EU-02 (Data Governance), EU-15 (Data Confidentiality) validation
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Dataverse for Teams Access</div>
+                        <div class="step-details">
+                            <strong>Request from IT:</strong> Read access to Dataverse tables storing conversation logs<br>
+                            <strong>Purpose:</strong> Access conversation history, user interactions, copilot performance metrics<br>
+                            <strong>Justification:</strong> Required for EU-04 (Record Keeping), EU-08 (Automatic Logging)
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Microsoft Purview (Optional)</div>
+                        <div class="step-details">
+                            <strong>Request from IT:</strong> Purview Compliance Portal access for DLP policy management<br>
+                            <strong>Purpose:</strong> Review sensitivity labels, DLP rules, compliance reports<br>
+                            <strong>Priority:</strong> Optional but recommended for enterprise deployments
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Workstation Setup (Simplified)</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%">Tool</th>
+                            <th>Purpose</th>
+                            <th>Installation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Web Browser</strong></td>
+                            <td>Access Copilot Studio portal, Power Platform Admin Center</td>
+                            <td>Microsoft Edge or Chrome (latest version)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Power Platform CLI</strong></td>
+                            <td>Automate environment queries, export copilot configurations</td>
+                            <td>Download from: aka.ms/PowerPlatformCLI</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Excel / Power BI</strong></td>
+                            <td>Analyze conversation data, create compliance dashboards</td>
+                            <td>Part of Microsoft 365</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Python (Optional)</strong></td>
+                            <td>Script automated testing, analyze exported data</td>
+                            <td>python.org - Only if automation needed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Presidio (Optional)</strong></td>
+                            <td>Validate PII detection in conversations</td>
+                            <td>pip install presidio-analyzer</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CoE Toolkit (Optional)</strong></td>
+                            <td>Power Platform Center of Excellence analytics</td>
+                            <td>Install from PowerApps solution gallery</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box">
+                    <strong>No Azure Infrastructure Required:</strong> Unlike Azure AI track, Copilot Studio assessments do not require dedicated Azure subscriptions, GPU VMs, or custom ML workspaces. All infrastructure is managed by Microsoft.
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Cost Comparison</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Azure AI Track Cost</th>
+                            <th>Copilot Studio Track Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Licenses</td>
+                            <td>N/A</td>
+                            <td>$200-600/month (Copilot Studio)</td>
+                        </tr>
+                        <tr>
+                            <td>Azure Infrastructure</td>
+                            <td>$3,000-6,500/month</td>
+                            <td>$0 (managed service)</td>
+                        </tr>
+                        <tr>
+                            <td>Assessment Tools</td>
+                            <td>$500-2,000/month (LangSmith, etc.)</td>
+                            <td>$200-500/month (minimal tooling)</td>
+                        </tr>
+                        <tr>
+                            <td>Storage & Logging</td>
+                            <td>$600-1,300/month</td>
+                            <td>$100-200/month (Dataverse storage)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total</strong></td>
+                            <td><strong>$4,100-9,800/month</strong></td>
+                            <td><strong>$500-1,300/month</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box highlight">
+                    <strong>85-90% Cost Reduction:</strong> Copilot Studio's managed service model significantly reduces infrastructure costs while maintaining EU AI Act compliance through built-in governance features.
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Setup Timeline</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Activities</th>
+                            <th>Deliverables</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Day 1</strong></td>
+                            <td>Request Copilot Studio license and Power Platform admin access</td>
+                            <td>IT ticket submitted</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Day 2-3</strong></td>
+                            <td>Receive access, install Power Platform CLI, browser setup</td>
+                            <td>Access confirmed, basic tools ready</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Day 4</strong></td>
+                            <td>Review copilot inventory, identify assessment targets</td>
+                            <td>Copilot inventory spreadsheet</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Day 5</strong></td>
+                            <td>Conduct first configuration review, test sample conversations</td>
+                            <td>Initial assessment findings</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Week 2+</strong></td>
+                            <td>Complete assessments, document EU controls, generate reports</td>
+                            <td>Compliance documentation</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section-content" id="copilot-assessment">
+            <div class="page-header">
+                <h2><span class="badge badge-copilot">Copilot Studio</span> Assessment Process</h2>
+                <p class="description">Step-by-step testing procedures for Copilot Studio solutions</p>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Phase 1: Configuration Review</div>
+                <ul class="step-list">
+                    <li class="step-item">
+                        <div class="step-title">Access Copilot Studio Portal</div>
+                        <div class="step-details">
+                            Navigate to copilotstudio.microsoft.com → Sign in with corporate credentials → Select environment (Production) → View all copilots
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Review Authentication Settings <span class="badge badge-eu">EU-06, EU-14</span></div>
+                        <div class="step-details">
+                            <strong>Check:</strong> Authentication required? No authentication allows anonymous access<br>
+                            <strong>Validate:</strong> OAuth configuration for Teams, web channel security<br>
+                            <strong>Document:</strong> Who can access the copilot, how identity is verified<br>
+                            <strong>Evidence:</strong> Screenshot of authentication configuration
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Audit Generative AI Configuration <span class="badge badge-eu">EU-07, EU-20</span></div>
+                        <div class="step-details">
+                            <strong>Settings → AI Capabilities:</strong> Is "Generative answers" enabled?<br>
+                            <strong>Content Moderation:</strong> What content filtering level is set? (Low/Medium/High)<br>
+                            <strong>Citation Requirement:</strong> Are citations enabled for generated responses?<br>
+                            <strong>Model Version:</strong> Which GPT model is configured? Document model name<br>
+                            <strong>Evidence:</strong> Export configuration as JSON
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Review Knowledge Sources <span class="badge badge-eu">EU-02, EU-10</span></div>
+                        <div class="step-details">
+                            <strong>Check:</strong> Which SharePoint sites or URLs are indexed?<br>
+                            <strong>Data Classification:</strong> Are knowledge sources properly labeled (Public/Internal/Confidential)?<br>
+                            <strong>Refresh Schedule:</strong> How often is content re-indexed?<br>
+                            <strong>Consent:</strong> Do you have authorization to use this data for AI?<br>
+                            <strong>Evidence:</strong> List of knowledge sources with classification labels
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Validate Topics & Conversation Design <span class="badge badge-eu">EU-17</span></div>
+                        <div class="step-details">
+                            <strong>Review:</strong> All topics, trigger phrases, conversation flows<br>
+                            <strong>Check:</strong> Are escalation paths to humans defined?<br>
+                            <strong>Validate:</strong> Error handling and fallback topics configured<br>
+                            <strong>Test:</strong> Out-of-scope queries properly handled<br>
+                            <strong>Evidence:</strong> Topic list export, flow diagrams
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Phase 2: Security & Data Governance Testing</div>
+                <ul class="step-list">
+                    <li class="step-item">
+                        <div class="step-title">Power Platform DLP Policy Review <span class="badge badge-eu">EU-15, EU-21</span></div>
+                        <div class="step-details">
+                            <strong>Navigate to:</strong> Power Platform Admin Center → Policies → Data policies<br>
+                            <strong>Check:</strong> Which DLP policies apply to copilot environment?<br>
+                            <strong>Connector Classification:</strong> Business | Non-business | Blocked<br>
+                            <strong>High-Risk Connectors:</strong> Ensure SQL, SharePoint, external APIs have proper governance<br>
+                            <strong>Evidence:</strong> DLP policy export, connector classification list
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Test Conversation for PII Handling <span class="badge badge-eu">EU-15</span></div>
+                        <div class="step-details">
+                            <strong>Manual Test:</strong> Start conversation, provide fake PII (SSN, credit card, phone number)<br>
+                            <strong>Observe:</strong> Does copilot refuse to process? Store? Display PII?<br>
+                            <strong>DLP Validation:</strong> Confirm DLP policy blocks PII in Power Automate flows<br>
+                            <strong>Optional Tool:</strong> Use Presidio to scan conversation logs for PII leakage<br>
+                            <strong>Evidence:</strong> Test conversation transcripts, DLP block notifications
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Review Power Automate Flow Security <span class="badge badge-eu">EU-06, EU-18</span></div>
+                        <div class="step-details">
+                            <strong>Identify Flows:</strong> List all Power Automate flows triggered by copilot<br>
+                            <strong>Connector Permissions:</strong> What data sources can flows access?<br>
+                            <strong>Approval Gates:</strong> Are there human approval steps for high-risk actions?<br>
+                            <strong>Error Handling:</strong> What happens if flow fails?<br>
+                            <strong>Evidence:</strong> Flow diagrams, connection references, permission matrix
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Audit Dataverse Data Access <span class="badge badge-eu">EU-04, EU-21</span></div>
+                        <div class="step-details">
+                            <strong>Check:</strong> Which Dataverse tables does copilot read/write?<br>
+                            <strong>Role-Based Access:</strong> Are security roles properly configured?<br>
+                            <strong>Field-Level Security:</strong> Is PII protected at field level?<br>
+                            <strong>Retention:</strong> How long are conversation logs retained?<br>
+                            <strong>Evidence:</strong> Security role assignments, table permissions, retention policies
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Phase 3: Performance & User Experience Testing</div>
+                <ul class="step-list">
+                    <li class="step-item">
+                        <div class="step-title">Conversational Testing <span class="badge badge-eu">EU-07</span></div>
+                        <div class="step-details">
+                            <strong>Test Scenarios:</strong> Create 20-30 test conversations covering: in-scope topics, out-of-scope queries, ambiguous requests, multi-turn conversations, error conditions<br>
+                            <strong>Accuracy Assessment:</strong> Did copilot provide correct answers? Rate each response (Correct/Incorrect/Partially Correct)<br>
+                            <strong>Hallucination Check:</strong> Did copilot invent information not in knowledge sources?<br>
+                            <strong>Evidence:</strong> Test conversation logs with accuracy ratings
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Review Built-in Analytics <span class="badge badge-eu">EU-09</span></div>
+                        <div class="step-details">
+                            <strong>Navigate to:</strong> Copilot Studio → Analytics tab<br>
+                            <strong>Metrics to Document:</strong> Total conversations, resolution rate, escalation rate, CSAT scores, topic performance<br>
+                            <strong>Trend Analysis:</strong> Compare last 7/30/90 days - is performance degrading?<br>
+                            <strong>Evidence:</strong> Analytics dashboard screenshots, exported metrics
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Transparency Validation <span class="badge badge-eu">EU-05, EU-13</span></div>
+                        <div class="step-details">
+                            <strong>Check Welcome Message:</strong> Does it disclose "You're talking to an AI"?<br>
+                            <strong>System Messages:</strong> Are limitations clearly communicated?<br>
+                            <strong>Citations:</strong> For generative answers, are sources cited?<br>
+                            <strong>Handoff Message:</strong> Is human escalation clearly explained?<br>
+                            <strong>Evidence:</strong> Screenshots of disclosure messages
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Phase 4: Logging & Auditability</div>
+                <ul class="step-list">
+                    <li class="step-item">
+                        <div class="step-title">Access Conversation Logs <span class="badge badge-eu">EU-04, EU-08</span></div>
+                        <div class="step-details">
+                            <strong>Method 1:</strong> Copilot Studio → Analytics → Conversations (last 30 days)<br>
+                            <strong>Method 2:</strong> Dataverse → ConversationTranscript table (long-term storage)<br>
+                            <strong>Verify:</strong> Full conversation history captured (inputs, outputs, timestamps, user IDs)<br>
+                            <strong>Retention:</strong> Confirm 10-year retention policy configured in Dataverse<br>
+                            <strong>Evidence:</strong> Sample conversation transcript with metadata
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Audit Log Review <span class="badge badge-eu">EU-06</span></div>
+                        <div class="step-details">
+                            <strong>Power Platform Admin Center:</strong> Analytics → Audit logs<br>
+                            <strong>Filter:</strong> Copilot-related activities (edits, publishes, permission changes)<br>
+                            <strong>Validate:</strong> Who modified copilot configuration? When?<br>
+                            <strong>Evidence:</strong> Audit log export showing configuration changes
+                        </div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-title">Export Compliance Data <span class="badge badge-eu">EU-23</span></div>
+                        <div class="step-details">
+                            <strong>Export Copilot:</strong> Settings → Export (saves as .zip with all topics and settings)<br>
+                            <strong>Export Conversations:</strong> Analytics → Export to Excel (last 30 days)<br>
+                            <strong>Export DLP Policies:</strong> Power Platform Admin Center → Export<br>
+                            <strong>Storage:</strong> Save to secure location with version control<br>
+                            <strong>Evidence:</strong> Exported files with timestamp for audit trail
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Copilot Studio Testing Checklist</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Test Category</th>
+                            <th>Tests Performed</th>
+                            <th>Pass/Fail Criteria</th>
+                            <th>Evidence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Authentication</strong></td>
+                            <td>Verify auth required, test unauthorized access</td>
+                            <td>PASS: Auth required and enforced</td>
+                            <td>Config screenshot, test log</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Content Filtering</strong></td>
+                            <td>Test harmful prompts, inappropriate content</td>
+                            <td>PASS: Content blocked by filters</td>
+                            <td>Test conversation transcripts</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PII Handling</strong></td>
+                            <td>Submit PII, check DLP enforcement</td>
+                            <td>PASS: PII not stored or exposed</td>
+                            <td>DLP block notifications</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Accuracy</strong></td>
+                            <td>20 test conversations, rate responses</td>
+                            <td>PASS: >85% accurate responses</td>
+                            <td>Test results spreadsheet</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Transparency</strong></td>
+                            <td>Check AI disclosure, citations</td>
+                            <td>PASS: All disclosure present</td>
+                            <td>Screenshots of messages</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Logging</strong></td>
+                            <td>Verify conversation capture, retention</td>
+                            <td>PASS: All logs captured, 10-year retention</td>
+                            <td>Sample logs, retention policy</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section-content" id="copilot-compliance">
+            <div class="page-header">
+                <h2><span class="badge badge-copilot">Copilot Studio</span> EU AI Act Compliance Mapping</h2>
+                <p class="description">How to demonstrate EU control compliance with Copilot Studio features</p>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Simplified Compliance: Built-in vs. Custom</div>
+                <div class="info-box">
+                    <strong>Key Advantage:</strong> Many EU AI Act requirements are satisfied through Copilot Studio's built-in features rather than custom tooling. This section maps each control to the appropriate validation method.
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 15%">EU Control</th>
+                            <th style="width: 35%">Azure AI Approach</th>
+                            <th style="width: 35%">Copilot Studio Approach</th>
+                            <th style="width: 15%">Complexity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>EU-01</strong><br>Risk Management</td>
+                            <td>Custom risk register in Azure DevOps, quarterly reviews</td>
+                            <td>Risk register in SharePoint/Excel, review copilot analytics for incidents</td>
+                            <td><span class="badge badge-low">Same</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>EU-02</strong><br>Data Governance</td>
+                            <td>Azure Purview for lineage, custom PII scans</td>
+                            <td>Document SharePoint sources, verify DLP policies, sensitivity labels</td>
+                            <td><span class="badge badge-low">Simpler</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>EU-03</strong><br>Documentation</td>
+                            <td>Model Cards Toolkit, Azure ML registry</td>
+                            <td>Export copilot configuration, document topics and flows</td>
+                            <td><span class="badge badge-low">Simpler</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>EU-04</strong><br>Record Keeping</td>
+                            <td>Azure Monitor, Application Insights, WORM storage</td>
+                            <td>Dataverse conversation logs with retention policy</td>
+                            <td><span class="badge badge-low">Simpler</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>EU-05</strong><br>Transparency</td>
+                            <td>Custom disclosure implementation</td>
+                            <td>Built-in system messages, configure welcome message</td>
+                            <td><span class="badge badge-low">Much Simpler</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>EU-06</strong><br>Human Oversight</td>
+                            <td>Custom Logic Apps approval workflows, LangSmith tracing</td>
+                            <td>Escalation topic design, Power Automate approval flows</td>
+                            <td><span class="badge badge-low">Simpler</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>EU-07</strong><br>Accuracy & Security</td>
+                            <td>Garak, PyRIT, adversarial testing, custom performance tests</td>
+                            <td>Manual conversation testing, validate content filters, review analytics</td>
+                            <td><span class="badge badge-medium">Moderately Simpler</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>EU-15</strong><br>Data Confidentiality</td>
+                            <td>Presidio scanning, Purview DLP, custom encryption checks</td>
+                            <td>Power Platform DLP validation, test PII handling</td>
+                            <td><span class="badge badge-low">Much Simpler</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>EU-16</strong><br>Bias Mitigation</td>
+                            <td>Fairlearn, AIF360, custom fairness audits</td>
+                            <td>Review conversation analytics by user demographics (if captured)</td>
+                            <td><span class="badge badge-medium">Similar</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>EU-17</strong><br>Explainability</td>
+                            <td>SHAP, LIME, LangSmith reasoning traces</td>
+                            <td>Conversation transcripts show topic flows, citations enabled</td>
+                            <td><span class="badge badge-low">Simpler</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>EU-20</strong><br>Generative AI Transparency</td>
+                            <td>Custom watermarking, training data documentation</td>
+                            <td>Citation feature enabled, document knowledge sources</td>
+                            <td><span class="badge badge-low">Simpler</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Evidence Collection for Copilot Studio</div>
+                <p style="margin-bottom: 15px;">For each EU control, collect the following evidence:</p>
+
+                <div class="tool-grid">
+                    <div class="tool-card">
+                        <div class="tool-name">Configuration Exports <span class="badge badge-eu">EU-03, EU-11</span></div>
+                        <div class="tool-purpose">Export copilot as .zip file (includes all topics, entities, variables). Store with version control. Documents technical configuration for conformity assessment.</div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-name">Conversation Transcripts <span class="badge badge-eu">EU-04, EU-08</span></div>
+                        <div class="tool-purpose">Export sample conversations from Analytics dashboard. Redact PII. Demonstrates logging completeness and conversation quality.</div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-name">DLP Policy Documentation <span class="badge badge-eu">EU-15</span></div>
+                        <div class="tool-purpose">Export DLP policies from Power Platform Admin Center. Screenshot connector classifications. Proves data governance controls.</div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-name">Analytics Reports <span class="badge badge-eu">EU-09</span></div>
+                        <div class="tool-purpose">Monthly snapshots of copilot analytics (resolution rate, CSAT, volume). Track trends over time. Supports post-market monitoring.</div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-name">Test Results <span class="badge badge-eu">EU-07</span></div>
+                        <div class="tool-purpose">Document accuracy testing (20+ conversations), security testing (PII handling), content filter validation. Store in SharePoint with timestamps.</div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-name">Audit Logs <span class="badge badge-eu">EU-06, EU-23</span></div>
+                        <div class="tool-purpose">Export Power Platform audit logs showing copilot modifications. Demonstrates change management and human oversight.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">Copilot Studio Assessment Report Template</div>
+                <div class="info-box">
+                    <strong>Report Structure:</strong> Create a standardized assessment report for each copilot evaluated.
+                </div>
+
+                <p style="margin: 15px 0; font-weight: 600;">Report Sections:</p>
+                <ol style="margin-left: 20px; margin-bottom: 15px;">
+                    <li style="margin-bottom: 8px;"><strong>Executive Summary</strong> - Copilot name, risk tier, overall compliance rating, key findings</li>
+                    <li style="margin-bottom: 8px;"><strong>Copilot Overview</strong> - Purpose, users, channels (Teams/Web/etc.), knowledge sources, integrations</li>
+                    <li style="margin-bottom: 8px;"><strong>Configuration Review</strong> - Authentication, generative AI settings, DLP policies applied</li>
+                    <li style="margin-bottom: 8px;"><strong>Security Testing Results</strong> - PII handling tests, content filter validation, connector security</li>
+                    <li style="margin-bottom: 8px;"><strong>Performance Assessment</strong> - Accuracy testing results, analytics review, user satisfaction scores</li>
+                    <li style="margin-bottom: 8px;"><strong>EU Control Compliance</strong> - Status for all 25 controls with evidence references</li>
+                    <li style="margin-bottom: 8px;"><strong>Findings & Recommendations</strong> - Issues identified, remediation steps, priority levels</li>
+                    <li style="margin-bottom: 8px;"><strong>Evidence Appendix</strong> - Links to stored evidence (exports, screenshots, test logs)</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- SUMMARY & REFERENCE SECTIONS -->
+        <div class="section-content" id="summary-controls">
+            <div class="page-header">
+                <h2>EU AI Act Control Catalog</h2>
+                <p class="description">Complete listing of all 25 EU AI Act controls with implementation guidance</p>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">How to Use This Catalog</div>
+                <div class="info-box">
+                    <strong>Purpose:</strong> This catalog provides detailed information for each of the 25 EU AI Act controls that must be validated during AI system assessments. Use this as your compliance checklist and evidence mapping guide.
+                </div>
+            </div>
+
+            <!-- EU-01 through EU-25 detailed cards -->
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-01</span>
+                    <span class="badge badge-eu">Article 9</span>
+                </div>
+                <div class="control-name">Risk Management Process</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Identify, analyze, and mitigate risks during development and operation of AI systems.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Maintain documented risk register; evaluate each use case via AI risk taxonomy; re-assess quarterly. Include likelihood, impact, detectability scores.
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Risk register (Excel/DevOps), impact assessments, mitigation action plans, quarterly review reports
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-02</span>
+                    <span class="badge badge-eu">Article 10</span>
+                </div>
+                <div class="control-name">Data Governance & Data Quality Controls</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Ensure training and input data are relevant, representative, and error-free to prevent discriminatory outcomes.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Apply data lineage tracking (Azure Purview); conduct data audits and quality checks; label dataset sources and licenses; document data collection methodology
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Dataset inventory, data quality reports, lineage diagrams, source documentation, consent records
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-03</span>
+                    <span class="badge badge-eu">Article 11, Annex IV</span>
+                </div>
+                <div class="control-name">Technical Documentation & Model Card</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Provide documentation for transparency and auditability of AI system design and capabilities.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Maintain system card + model card; include intended purpose, architecture, limitations, performance metrics, training procedure, validation results
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Technical documentation, model cards, architecture diagrams, change logs, version history
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-04</span>
+                    <span class="badge badge-eu">Article 12, Article 19</span>
+                </div>
+                <div class="control-name">Record Keeping & Logging</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Enable traceability of agent decisions and tool actions for post-incident analysis and regulatory inspection.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Log inputs, prompts, tool calls, decisions, outputs, approvals, outcomes in immutable format (Azure Monitor, Dataverse). Minimum 10-year retention for high-risk systems
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Tamper-evident logs (WORM storage), hash verifications, log retention policies, sample log exports
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-05</span>
+                    <span class="badge badge-eu">Article 13, Article 52</span>
+                </div>
+                <div class="control-name">Transparency & Disclosure</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Inform users that they interact with AI and describe system capabilities to prevent deception.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Provide user-facing disclosure banners ("You are interacting with AI"); publish "Agent System Card" with capabilities and limitations
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Transparency statement, system card copy, website/app disclosure screenshots, user notification logs
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-06</span>
+                    <span class="badge badge-eu">Article 14</span>
+                </div>
+                <div class="control-name">Human Oversight</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Guarantee meaningful human control over automated decisions, especially high-risk actions.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Define "human-in-loop" and "human-on-loop" approval gates per action type; dual approvals for high-risk decisions; kill-switch capability
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Oversight policy document, approval logs with timestamps, training materials for human reviewers, escalation workflows
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-07</span>
+                    <span class="badge badge-eu">Article 15</span>
+                </div>
+                <div class="control-name">Accuracy, Robustness, and Cybersecurity</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Ensure reliable outputs and protection against manipulation, attacks, and security breaches.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Evaluate model accuracy ≥95% on defined test set; run adversarial and jailbreak tests monthly (Garak, PyRIT); secure APIs with mTLS; implement content filtering
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Performance test results (accuracy, precision, recall), red-team logs, adversarial robustness scores, penetration test reports, security scan outputs
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-08</span>
+                    <span class="badge badge-eu">Article 12, Article 19</span>
+                </div>
+                <div class="control-name">Automatic Logging of Decisions & Actions</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Provide continuous audit trail for post-incident analysis and regulatory inspection.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Implement telemetry pipeline capturing every tool-call and user interaction (Application Insights, LangSmith). Automatic, no manual intervention required
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Structured JSON logs, retention policy documentation (≥10 years), sample traces showing complete decision chains
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-09</span>
+                    <span class="badge badge-eu">Article 61-62</span>
+                </div>
+                <div class="control-name">Post-Market Monitoring System</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Detect risks emerging during deployment through continuous performance monitoring.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Establish monitoring pipeline (drift detection, incidents, user complaints); triage via risk dashboard; monthly reviews; alert on performance degradation
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Monitoring plan document, incident register, escalation logs, monthly monitoring reports, drift detection alerts
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-10</span>
+                    <span class="badge badge-eu">Article 65-67</span>
+                </div>
+                <div class="control-name">Corrective Action Procedure</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Rapidly mitigate non-conformities and safety issues when identified.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Maintain "kill-switch" capability; define retraining workflow triggers; report corrective actions to compliance officer within defined SLA
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Corrective action reports with timestamps, root-cause analysis documents, retraining justifications, kill-switch activation logs
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-11</span>
+                    <span class="badge badge-eu">Article 48, Annex V</span>
+                </div>
+                <div class="control-name">Provider Declaration of Conformity</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Certify compliance of system before market deployment via formal declaration.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Draft Declaration referencing control evidence and CE mark process; legal review required; signed by authorized representative
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Signed Declaration of Conformity document, supporting test summary, CE mark documentation (if applicable)
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-12</span>
+                    <span class="badge badge-eu">Article 51, Annex VIII</span>
+                </div>
+                <div class="control-name">Registration in EU AI Database</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Register high-risk systems before deployment for regulatory visibility.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Submit registration form via Commission database with conformity reference; update annually or upon significant changes
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Database entry receipt, registration confirmation number, annual renewal tracking
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-13</span>
+                    <span class="badge badge-eu">Article 11(2), Annex IV</span>
+                </div>
+                <div class="control-name">Instructions for Use</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Supply clear operational guidance to deployers and users.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Publish usage manual including inputs, risks, monitoring requirements, maintenance intervals, troubleshooting guides
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        "Instructions for Use" PDF/document, version control, distribution logs showing who received instructions
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-14</span>
+                    <span class="badge badge-eu">Article 13(3)</span>
+                </div>
+                <div class="control-name">Information Provision to Users</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Provide clear user documentation on limitations and accuracy.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Include accuracy scores, performance ranges, known failure modes in user-facing documentation; create FAQ
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        User documentation package, FAQ, training content, user acceptance testing records
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-15</span>
+                    <span class="badge badge-eu">Article 10(5), GDPR Article 25</span>
+                </div>
+                <div class="control-name">Data Access & Confidentiality Safeguards</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Ensure data confidentiality in processing, prevent unauthorized access and PII exposure.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Apply encryption (at rest and in transit), DLP policies, sensitivity labeling, access controls (Azure Purview, MIP). Regular PII scanning (Presidio)
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Data protection logs, DLP configurations, encryption certificates, PII scan results, access control matrices
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-16</span>
+                    <span class="badge badge-eu">Recital 44, Annex IV(2)(b)</span>
+                </div>
+                <div class="control-name">Bias & Discrimination Mitigation</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Prevent bias in datasets and model behavior that could lead to discriminatory outcomes.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Run fairness audits using Fairlearn/AIF360 quarterly; test demographic parity, equalized odds; maintain mitigation records; 80% rule compliance
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Fairness audit reports, demographic parity metrics, bias remediation logs, group-level performance comparisons
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-17</span>
+                    <span class="badge badge-eu">Article 13(2)</span>
+                </div>
+                <div class="control-name">Explainability & Justification of Outputs</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Ensure users can interpret reasoning behind AI decisions for transparency and contestability.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Require models to produce traceable reasoning/citations; measure interpretability scores; use SHAP/LIME for explanations; LangSmith for agent traces
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Explainability evaluation results, feature importance rankings, local explanation samples, agent reasoning traces
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-18</span>
+                    <span class="badge badge-eu">Article 15(2), Annex IV(2)(h)</span>
+                </div>
+                <div class="control-name">Security of Model and Supply Chain</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Protect models from adversarial manipulation and ensure supply chain integrity.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Generate SBOM/ML-BOM for models; verify SLSA level; patch CVEs in ML libraries; track model provenance
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Software Bill of Materials (SBOM), vulnerability scan reports, patch management logs, supply chain verification documents
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-19</span>
+                    <span class="badge badge-eu">Article 5, Annex I</span>
+                </div>
+                <div class="control-name">Prohibited Practices Exclusion</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Verify system does not use subliminal, manipulative, or social scoring functions prohibited by EU law.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Conduct red-team tests for manipulation techniques; document absence of banned features; legal review of use case
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Compliance checklist, red team test logs, legal opinion confirming no prohibited practices
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-20</span>
+                    <span class="badge badge-eu">Article 52(1-3) GPAI</span>
+                </div>
+                <div class="control-name">Generative AI Transparency & Copyright Attribution</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> For GPAI: disclose content origin, watermark outputs, list training data sources for copyright compliance.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Embed watermark using C2PA standard; publish data summary statement listing training sources; detect AI-generated content
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Watermark verification logs, data summary document, copyright compliance attestation, training data manifest
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-21</span>
+                    <span class="badge badge-eu">Article 10(5), GDPR Article 12-23</span>
+                </div>
+                <div class="control-name">User Data Rights Management</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Respect rights of data subjects (access, deletion, correction) per GDPR.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Implement data access, deletion, and correction channels; respond to DSAR within 30 days; maintain request logs
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Data subject request logs, response time metrics, deletion verification reports, process documentation
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header">
+                    <span class="control-id">EU-22</span>
+                    <span class="badge badge-eu">Article 14(4)</span>
+                </div>
+                <div class="control-name">Human Competence & Training</div>
+                <div class="control-purpose"><strong>Purpose / Risk Mitigated:</strong> Ensure staff understand oversight responsibilities and can effectively monitor AI systems.</div>
+                <div class="control-details">
+                    <div>
+                        <div class="control-detail-label">Operational Implementation</div>
+                        Provide training and attestation to human reviewers; define competency requirements; annual refresher courses
+                    </div>
+                    <div>
+                        <div class="control-detail-label">Evidence Required</div>
+                        Training logs with attendance records, competency assessment results, annual attestation forms
+                    </div>

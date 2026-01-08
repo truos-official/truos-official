@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UN Secretariat AI Governance Playbook - GeoNow 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --un-blue: #009edb;
+            --un-dark-blue: #0074b7;
+            --un-light-blue: #4da6d6;
+            --text-dark: #1a1a1a;
+            --text-medium: #4a4a4a;
+            --text-light: #767676;
+            --bg-light: #f5f5f5;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-light);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: var(--un-blue);
+            color: white;
+            padding: 1.2rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .un-logo {
+            width: 45px;
+            height: 45px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--un-blue);
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        nav {
+            width: 280px;
+            background: white;
+            position: sticky;
+            top: 75px;
+            height: calc(100vh - 75px);
+            overflow-y: auto;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+            flex-shrink: 0;
+        }
+
+        .nav-container {
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem 0;
+        }
+
+        .nav-btn {
+            padding: 0.9rem 1.5rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--text-medium);
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+            text-align: left;
+            white-space: normal;
+            line-height: 1.4;
+        }
+
+        .nav-btn:hover {
+            color: var(--un-blue);
+            background: rgba(0, 158, 219, 0.05);
+        }
+
+        .nav-btn.active {
+            color: var(--un-blue);
+            border-left-color: var(--un-blue);
+            font-weight: 600;
+            background: rgba(0, 158, 219, 0.08);
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem 3rem 4rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .section {
+            display: none;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--un-blue);
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 3px solid var(--un-blue);
+        }
+
+        h3 {
+            color: var(--un-dark-blue);
+            font-size: 1.25rem;
+            margin: 1.8rem 0 1rem;
+            font-weight: 600;
+        }
+
+        h4 {
+            color: var(--text-dark);
+            font-size: 1.05rem;
+            margin: 1.3rem 0 0.7rem;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            line-height: 1.7;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0;
+            font-size: 0.88rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: var(--un-blue);
+            color: white;
+            padding: 0.9rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 0.9rem;
+            border: 1px solid var(--border-color);
+        }
+
+        tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        tr:hover {
+            background: rgba(0, 158, 219, 0.05);
+        }
+
+        .callout {
+            background: #e3f2fd;
+            border-left: 4px solid var(--un-blue);
+            padding: 1.2rem;
+            margin: 1.2rem 0;
+            border-radius: 4px;
+        }
+
+        .callout-success {
+            background: #e8f5e9;
+            border-left-color: #2ecc71;
+        }
+
+        .callout-warning {
+            background: #fff3e0;
+            border-left-color: #f39c12;
+        }
+
+        .callout-danger {
+            background: #ffebee;
+            border-left-color: #e74c3c;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--un-blue) 0%, var(--un-dark-blue) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.95;
+        }
+
+        footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .presenter-info {
+            font-size: 0.88rem;
+            line-height: 1.8;
+        }
+
+        .presenter-info strong {
+            color: var(--un-light-blue);
+        }
+
+        .presenter-info a {
+            color: var(--un-light-blue);
+            text-decoration: none;
+        }
+
+        .presenter-info a:hover {
+            text-decoration: underline;
+        }
+
+        a {
+            color: var(--un-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .external-link::after {
+            content: " ↗";
+            font-size: 0.8em;
+        }
+
+        .progress-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--un-blue);
+            z-index: 1000;
+        }
+
+        .layer-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .layer {
+            background: linear-gradient(135deg, var(--un-light-blue) 0%, var(--un-blue) 100%);
+            color: white;
+            padding: 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .layer:hover {
+            transform: translateX(10px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+
+        .layer-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .layer-desc {
+            font-size: 0.85rem;
+            opacity: 0.95;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            
+            nav {
+                width: 100%;
+                height: auto;
+                position: relative;
+                top: 0;
+            }
+            
+            .nav-container {
+                flex-direction: row;
+                flex-wrap: wrap;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+            
+            .nav-btn {
+                border-left: none;
+                border-bottom: 3px solid transparent;
+                padding: 0.7rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .nav-btn.active {
+                border-left: none;
+                border-bottom-color: var(--un-blue);
+            }
+            
+            main {
+                padding: 1.5rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+        }
+
+        @media print {
+            header, nav, .progress-indicator {
+                display: none;
+            }
+            .section {
+                display: block !important;
+                page-break-after: always;
+                box-shadow: none;
+            }
+            body {
+                background: white;
+            }
+            .content-wrapper {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="un-logo">UN</div>
+            <div>
+                <h1>AI Governance Playbook</h1>
+                <div class="subtitle">Strategic Enabler for the UN Secretariat | GeoNow 2025</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="content-wrapper">
+        <nav>
+            <div class="nav-container">
+                <button class="nav-btn active" onclick="showSection(0)">1. Mission</button>
+                <button class="nav-btn" onclick="showSection(1)">1A. Governance Context</button>
+                <button class="nav-btn" onclick="showSection(2)">2. Strategic Frontier</button>
+                <button class="nav-btn" onclick="showSection(3)">3. Governance Framework</button>
+                <button class="nav-btn" onclick="showSection(4)">4. Governance Capabilities</button>
+                <button class="nav-btn" onclick="showSection(5)">4A. Decision Framework</button>
+                <button class="nav-btn" onclick="showSection(6)">5. OICT Division</button>
+                <button class="nav-btn" onclick="showSection(7)">6. Governance Agenda</button>
+                <button class="nav-btn" onclick="showSection(8)">7. Current Challenges</button>
+                <button class="nav-btn" onclick="showSection(9)">8. Countermeasures</button>
+                <button class="nav-btn" onclick="showSection(10)">9. Implementation Pathway</button>
+                <button class="nav-btn" onclick="showSection(11)">10. Conclusion</button>
+            </div>
+        </nav>
+
+        <main>
+        <!-- Section 1: Mission -->
+        <section class="section active">
+            <h2>1. Mission: Peace Through Scalable Cooperation</h2>
+            
+            <h3>Overview</h3>
+            <p>The United Nations was founded on one core principle: <strong>peace through cooperation</strong>. Our mission has always been to connect nations, enable dialogue, and coordinate solutions that no single state could achieve alone.</p>
+            
+            <p>Today, that same mission extends into the digital domain. Where once we convened diplomats, we now connect systems of intelligence. Where once we mediated state-to-state conflict, we now mediate between algorithms, data, and platforms.</p>
+            
+            <div class="callout">
+                <strong>Core Principle:</strong> The UN's strength has never been control—it has always been coordination. In this new era, coordination happens through AI governance: the rules, architectures, and partnerships that allow us to scale AI responsibly across borders.
+            </div>
+            
+            <p>Governance, in this context, is not bureaucracy. It is the <span class="highlight">infrastructure of peace</span>—ensuring that artificial intelligence strengthens human collaboration rather than replacing it.</p>
+            
+            <h3>Objectives</h3>
+            <ul>
+                <li>Align AI adoption with UN values of trust, transparency, and fairness</li>
+                <li>Enable interoperable and safe data sharing across Secretariat entities</li>
+                <li>Build confidence that AI systems serve humanity, not hierarchy</li>
+            </ul>
+            
+            <div class="callout callout-success">
+                <p style="font-size: 1.05rem; font-style: italic;">
+                    "In the 20th century, we safeguarded peace through diplomacy. In the 21st century, we safeguard peace through digital cooperation, algorithmic accountability, and data ethics."
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 1A: Governance Context -->
+        <section class="section">
+            <h2>1A. Governance Context - The 2025 Landscape</h2>
+            
+            <h3>The New UN AI Governance Architecture</h3>
+            <p>In August 2025, the UN General Assembly established two landmark mechanisms:</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">193</span>
+                    <span class="stat-label">Member States Engaged</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">2</span>
+                    <span class="stat-label">New Governance Bodies</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">118</span>
+                    <span class="stat-label">Countries Not in Any Initiative</span>
+                </div>
+            </div>
+            
+            <h4>1. The Global Dialogue on AI Governance</h4>
+            <ul>
+                <li>Inclusive forum for governments and stakeholders</li>
+                <li>Addresses safety, security, trustworthiness challenges</li>
+                <li>Launched September 2025 during UNGA High-Level Week</li>
+                <li>Annual sessions alternating between New York and Geneva</li>
+            </ul>
+            
+            <h4>2. The Independent International Scientific Panel on AI</h4>
+            <ul>
+                <li>First global scientific body on AI assessment</li>
+                <li>~40 experts appointed for three-year terms</li>
+                <li>Provides evidence-based policy guidance</li>
+            </ul>
+            
+            <div class="callout">
+                <strong>Reference:</strong> UN General Assembly Resolution A/RES/79/325 (August 26, 2025)<br>
+                <a href="https://news.un.org/en/story/2025/09/1165898" class="external-link">UN News</a> | 
+                <a href="https://www.weforum.org/stories/2025/10/un-new-ai-governance-bodies/" class="external-link">WEF Analysis</a>
+            </div>
+            
+            <h3>UN Secretariat's Role</h3>
+            <p>OICT serves as the <strong>operational bridge</strong> between high-level commitments and practical implementation across UN entities.</p>
+            
+            <div class="callout callout-success">
+                <strong>Our Position:</strong> "We translate principles into infrastructure—turning governance commitments into deployable systems that serve peace."
+            </div>
+            
+            <h3>Strategic Alignment</h3>
+            <table>
+                <tr>
+                    <th>Initiative</th>
+                    <th>Organization</th>
+                    <th>Year</th>
+                </tr>
+                <tr>
+                    <td>Global Digital Compact</td>
+                    <td>UN (Pact for the Future)</td>
+                    <td>2024</td>
+                </tr>
+                <tr>
+                    <td>Global AI Governance Action Plan</td>
+                    <td>World AI Conference</td>
+                    <td>2025</td>
+                </tr>
+                <tr>
+                    <td>Hiroshima AI Process</td>
+                    <td>G7</td>
+                    <td>2023</td>
+                </tr>
+                <tr>
+                    <td>UNESCO Ethics Recommendation</td>
+                    <td>UNESCO (194 members)</td>
+                    <td>2021</td>
+                </tr>
+                <tr>
+                    <td>OECD AI Principles</td>
+                    <td>OECD, adopted by G20</td>
+                    <td>2019</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Section 2: Strategic Frontier -->
+        <section class="section">
+            <h2>2. The Strategic Frontier - What AI Represents</h2>
+            
+            <h3>AI as a Capability Infrastructure</h3>
+            <p>Nations now compete for <span class="highlight">informational sovereignty</span>: the ability to forecast, decide, act, and communicate at unprecedented scale and speed.</p>
+            
+            <h3>Eight Strategic Capabilities of AI</h3>
+            <table>
+                <tr>
+                    <th style="width: 18%;">Capability</th>
+                    <th style="width: 27%;">Description</th>
+                    <th style="width: 27%;">National Advantage</th>
+                    <th style="width: 28%;">Governance Implication</th>
+                </tr>
+                <tr>
+                    <td><strong>1. Predictive Sovereignty</strong></td>
+                    <td>Forecasting crises before escalation</td>
+                    <td>Early warning enables preemptive action</td>
+                    <td>Model transparency, validation, bias audits</td>
+                </tr>
+                <tr>
+                    <td><strong>2. Cognitive Superiority</strong></td>
+                    <td>Faster decision cycles</td>
+                    <td>Minutes vs. days in crisis response</td>
+                    <td>Human oversight, explainability standards</td>
+                </tr>
+                <tr>
+                    <td><strong>3. Narrative Control</strong></td>
+                    <td>Shaping information flows via generative AI</td>
+                    <td>Controls perception and messaging</td>
+                    <td>Provenance tracking, authenticity controls</td>
+                </tr>
+                <tr>
+                    <td><strong>4. Knowledge Aggregation</strong></td>
+                    <td>Synthesizing global data into intelligence</td>
+                    <td>Transforms fragmented info to insight</td>
+                    <td>Data-sharing ethics, access equity</td>
+                </tr>
+                <tr>
+                    <td><strong>5. Algorithmic Economic Power</strong></td>
+                    <td>Optimizing production and logistics</td>
+                    <td>Efficiency and cost reduction</td>
+                    <td>Access fairness, antitrust considerations</td>
+                </tr>
+                <tr>
+                    <td><strong>6. Cyber-Physical Autonomy</strong></td>
+                    <td>AI in drones, grids, transportation</td>
+                    <td>Autonomous operations at scale</td>
+                    <td>Safety protocols, human-in-loop governance</td>
+                </tr>
+                <tr>
+                    <td><strong>7. Geospatial Intelligence</strong></td>
+                    <td>AI-enhanced satellite/drone monitoring</td>
+                    <td>Unprecedented situational awareness</td>
+                    <td>Cross-border governance, privacy protection</td>
+                </tr>
+                <tr>
+                    <td><strong>8. Agentic AI</strong></td>
+                    <td>Self-coordinating autonomous systems</td>
+                    <td>Future AI-to-AI diplomacy</td>
+                    <td>Trust protocols, autonomous audit mechanisms</td>
+                </tr>
+            </table>
+            
+            <h3>Impact Quantification</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0;">
+                <div class="callout callout-danger">
+                    <h4>Without Governance</h4>
+                    <ul>
+                        <li>Predictive bias: $100M+ misallocation</li>
+                        <li>Unverified geospatial AI: false security alerts</li>
+                        <li>Algorithmic power: deepened inequality</li>
+                    </ul>
+                </div>
+                <div class="callout callout-success">
+                    <h4>With Governance</h4>
+                    <ul>
+                        <li>Crisis response: 40-60% faster</li>
+                        <li>Decision accuracy: +25-35%</li>
+                        <li>Trust in AI: +50-70%</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="callout">
+                <p><strong>Strategic Imperative:</strong> The UN Secretariat ensures these capabilities serve peace, equity, and cooperation—not dominance.</p>
+            </div>
+        </section>
+
+        <!-- Section 3: Framework -->
+        <section class="section">
+            <h2>3. Framework - Stackable Governance Architecture</h2>
+            
+            <h3>Our Model</h3>
+            <p>We govern AI through <strong>stackable architecture</strong>: independent modules that interlock, scale, and adapt.</p>
+            
+            <div class="callout">
+                <strong>Key Principle:</strong> Deploy interoperable modules that fit multiple missions, entities, and regions—not one monolithic system.
+            </div>
+            
+            <h3>The Six-Layer Governance Stack</h3>
+            <div class="layer-stack">
+                <div class="layer">
+                    <div class="layer-title">Layer 6: Stakeholder Communication</div>
+                    <div class="layer-desc">Model cards, transparency reports, partner dialogue, incident disclosure</div>
+                </div>
+                <div class="layer">
+                    <div class="layer-title">Layer 5: Performance Measurement</div>
+                    <div class="layer-desc">Fairness metrics, robustness measures, explainability scores</div>
+                </div>
+                <div class="layer">
+                    <div class="layer-title">Layer 4: Software & Model Oversight</div>
+                    <div class="layer-desc">Model registry, versioning, audit trails, transparency docs</div>
+                </div>
+                <div class="layer">
+                    <div class="layer-title">Layer 3: Infrastructure Governance</div>
+                    <div class="layer-desc">Data classification, DLP, sensitivity labels, access control</div>
+                </div>
+                <div class="layer">
+                    <div class="layer-title">Layer 2: Risk Management</div>
+                    <div class="layer-desc">Risk registry, bias detection, robustness testing</div>
+                </div>
+                <div class="layer">
+                    <div class="layer-title">Layer 1: Compliance & Ethics</div>
+                    <div class="layer-desc">EU AI Act, NIST RMF, ISO 42001, OECD alignment</div>
+                </div>
+            </div>
+            
+            <h3>Framework Alignment</h3>
+            <table>
+                <tr>
+                    <th>Module</th>
+                    <th>EU AI Act</th>
+                    <th>NIST RMF</th>
+                    <th>ISO 42001</th>
+                </tr>
+                <tr>
+                    <td>Compliance & Ethics</td>
+                    <td>Articles 5-7</td>
+                    <td>Govern</td>
+                    <td>Clause 4.4, 5</td>
+                </tr>
+                <tr>
+                    <td>Risk Management</td>
+                    <td>Articles 9-15</td>
+                    <td>Map, Measure, Manage</td>
+                    <td>Clause 6, 8</td>
+                </tr>
+                <tr>
+                    <td>Infrastructure</td>
+                    <td>Article 10</td>
+                    <td>Data Governance</td>
+                    <td>Clause 7.5</td>
+                </tr>
+                <tr>
+                    <td>Model Oversight</td>
+                    <td>Articles 11-12</td>
+                    <td>Measure</td>
+                    <td>Clause 8.2</td>
+                </tr>
+                <tr>
+                    <td>Performance</td>
+                    <td>Article 15</td>
+                    <td>Measure</td>
+                    <td>Clause 9</td>
+                </tr>
+                <tr>
+                    <td>Communication</td>
+                    <td>Article 13</td>
+                    <td>Culture</td>
+                    <td>Clause 7.4</td>
+                </tr>
+            </table>
+            
+            <div class="callout">
+                <strong>References:</strong>
+                <a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" class="external-link">EU AI Act</a> | 
+                <a href="https://www.nist.gov/itl/ai-risk-management-framework" class="external-link">NIST RMF</a> | 
+                <a href="https://www.iso.org/standard/81230.html" class="external-link">ISO 42001</a>
+            </div>
+            
+            <h3>Implementation Path</h3>
+            <ul>
+                <li><strong>Minimum Viable:</strong> Layers 1-3 (start here)</li>
+                <li><strong>6 Months:</strong> Add Layers 4-5</li>
+                <li><strong>12 Months:</strong> Full stack with Layer 6</li>
+            </ul>
+        </section>
+
+        <!-- Section 4: Capabilities -->
+        <section class="section">
+            <h2>4. Capabilities - How We Govern</h2>
+            
+            <h3>Three Governance Pillars</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">Pillar 1</span>
+                    <span class="stat-number" style="font-size: 1.8rem;">Accountability</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Pillar 2</span>
+                    <span class="stat-number" style="font-size: 1.8rem;">Policies</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Pillar 3</span>
+                    <span class="stat-number" style="font-size: 1.8rem;">Partnerships</span>
+                </div>
+            </div>
+            
+            <h3>Pillar 1: Accountability</h3>
+            <p>Clear ownership, traceability, and responsibility for every AI system.</p>
+            <ul>
+                <li><strong>AI System Registry:</strong> Unique identifier, owner, documentation</li>
+                <li><strong>Stewardship Model:</strong> Named individuals responsible</li>
+                <li><strong>Audit Trails:</strong> Complete logging of decisions and changes</li>
+                <li><strong>Incident Response:</strong> Clear escalation paths</li>
+            </ul>
+            
+            <h3>Pillar 2: Policies</h3>
+            <p>Codified standards and automated enforcement.</p>
+            <ul>
+                <li><strong>Technical:</strong> Data access, model training, deployment standards</li>
+                <li><strong>Ethical:</strong> Fairness, bias mitigation, human rights</li>
+                <li><strong>Operational:</strong> Usage guidelines, incident reporting</li>
+                <li><strong>Vendor:</strong> Third-party AI evaluation, contract requirements</li>
+            </ul>
+            
+            <h3>Pillar 3: Partnerships</h3>
+            <p>Collaborative relationships enabling shared governance.</p>
+            <table>
+                <tr>
+                    <th>Partner Type</th>
+                    <th>Examples</th>
+                    <th>Contribution</th>
+                </tr>
+                <tr>
+                    <td><strong>Hyperscalers</strong></td>
+                    <td>Microsoft, Google, AWS</td>
+                    <td>Co-development of controls, early access</td>
+                </tr>
+                <tr>
+                    <td><strong>Academia</strong></td>
+                    <td>Research institutions</td>
+                    <td>Independent validation, innovation</td>
+                </tr>
+                <tr>
+                    <td><strong>Member States</strong></td>
+                    <td>UN member countries</td>
+                    <td>Joint testbeds, capacity building</td>
+                </tr>
+                <tr>
+                    <td><strong>Civil Society</strong></td>
+                    <td>NGOs, advocacy groups</td>
+                    <td>Ethics review, accountability</td>
+                </tr>
+            </table>
+            
+            <h3>Platform Orchestrator Model</h3>
+            <p><strong>We no longer just set policy—we orchestrate a global governance platform.</strong></p>
+            <ol>
+                <li><strong>Convene</strong> diverse stakeholders</li>
+                <li><strong>Standardize</strong> frameworks and protocols</li>
+                <li><strong>Validate</strong> AI systems independently</li>
+                <li><strong>Enable</strong> tools, training, resources</li>
+                <li><strong>Monitor</strong> governance effectiveness</li>
+                <li><strong>Evolve</strong> continuously</li>
+            </ol>
+        </section>
+
+        <!-- Section 4A: Decision Framework -->
+        <section class="section">
+            <h2>4A. Decision Framework - When to Apply Governance</h2>
+            
+            <h3>Risk Assessment Dimensions</h3>
+            <table>
+                <tr>
+                    <th>Dimension</th>
+                    <th>Range</th>
+                    <th>Governance Impact</th>
+                </tr>
+                <tr>
+                    <td><strong>Impact Scope</strong></td>
+                    <td>Individual → Global</td>
+                    <td>Wider scope = higher level</td>
+                </tr>
+                <tr>
+                    <td><strong>Decision Consequence</strong></td>
+                    <td>Informational → Automated</td>
+                    <td>More automation = more oversight</td>
+                </tr>
+                <tr>
+                    <td><strong>Data Sensitivity</strong></td>
+                    <td>Public → Restricted</td>
+                    <td>Higher sensitivity = stricter controls</td>
+                </tr>
+                <tr>
+                    <td><strong>Vulnerability Context</strong></td>
+                    <td>General → Conflict Zone</td>
+                    <td>Vulnerable populations = max safeguards</td>
+                </tr>
+            </table>
+            
+            <h3>Five Governance Levels</h3>
+            <div class="stats-grid">
+                <div class="stat-card" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
+                    <span class="stat-label">10-15 pts</span>
+                    <span class="stat-number" style="font-size: 1.5rem;">Level 1</span>
+                    <span class="stat-label">Minimal</span>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #3498db, #2980b9);">
+                    <span class="stat-label">16-25 pts</span>
+                    <span class="stat-number" style="font-size: 1.5rem;">Level 2</span>
+                    <span class="stat-label">Limited</span>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #f39c12, #e67e22);">
+                    <span class="stat-label">26-35 pts</span>
+                    <span class="stat-number" style="font-size: 1.5rem;">Level 3</span>
+                    <span class="stat-label">Moderate</span>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                    <span class="stat-label">36-45 pts</span>
+                    <span class="stat-number" style="font-size: 1.5rem;">Level 4</span>
+                    <span class="stat-label">High</span>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #8e44ad, #71368a);">
+                    <span class="stat-label">46-50 pts</span>
+                    <span class="stat-number" style="font-size: 1.5rem;">Level 5</span>
+                    <span class="stat-label">Critical</span>
+                </div>
+            </div>
+            
+            <h3>10-Question Rapid Assessment</h3>
+            <p>Score each question 1-5 points (1=lowest risk, 5=highest):</p>
+            <ol>
+                <li>How many people affected? (1-10 people = 1pt → 10K+ = 5pts)</li>
+                <li>Data type? (Public = 1pt → Special category = 5pts)</li>
+                <li>Automation level? (Info only = 1pt → Fully automated = 5pts)</li>
+                <li>Reversibility? (Instant = 1pt → Irreversible = 5pts)</li>
+                <li>Vulnerable populations? (None = 1pt → Life-sustaining/crisis = 5pts)</li>
+                <li>Explainability? (Fully transparent = 1pt → Black box = 5pts)</li>
+                <li>Bias potential? (None = 1pt → Extreme risk = 5pts)</li>
+                <li>Cybersecurity risk? (Public/non-sensitive = 1pt → National security = 5pts)</li>
+                <li>Operational criticality? (Nice to have = 1pt → Mission-critical = 5pts)</li>
+                <li>Political sensitivity? (None = 1pt → Diplomatic implications = 5pts)</li>
+            </ol>
+            
+            <h3>Pre-Deployment Checklist</h3>
+            <div class="callout">
+                <strong>Before deployment, confirm:</strong>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li>☐ Risk assessment completed</li>
+                    <li>☐ AI Steward assigned</li>
+                    <li>☐ Required governance modules implemented</li>
+                    <li>☐ Data sensitivity classified</li>
+                    <li>☐ Model documentation completed</li>
+                    <li>☐ Bias testing conducted</li>
+                    <li>☐ Cybersecurity review passed</li>
+                    <li>☐ User training prepared</li>
+                    <li>☐ Incident response plan documented</li>
+                    <li>☐ Monitoring configured</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 5: OICT Division -->
+        <section class="section">
+            <h2>5. Governing Entity - OICT Policy, Strategy & Governance Division</h2>
+            
+            <h3>About the Division</h3>
+            <p>AI governance is led by the <strong>Policy, Strategy & Governance Division</strong> within the <strong>Office of Information and Communications Technology (OICT)</strong>.</p>
+            
+            <div class="callout">
+                <strong>Mission:</strong> Enable UN Secretariat entities to leverage AI safely, ethically, and effectively in service of peace, development, and human rights.
+            </div>
+            
+            <h3>Global Footprint</h3>
+            <table>
+                <tr>
+                    <th>Location</th>
+                    <th>Role</th>
+                    <th>Focus Areas</th>
+                </tr>
+                <tr>
+                    <td><strong>New York, USA</strong></td>
+                    <td>Headquarters</td>
+                    <td>Strategic oversight, policy development, partnership management</td>
+                </tr>
+                <tr>
+                    <td><strong>Bangkok, Thailand</strong></td>
+                    <td>Asia-Pacific Hub</td>
+                    <td>Regional operations, multilingual AI development</td>
+                </tr>
+                <tr>
+                    <td><strong>Valencia, Spain</strong></td>
+                    <td>Global Service Centre</td>
+                    <td>European operations, GDPR compliance, data center services</td>
+                </tr>
+                <tr>
+                    <td><strong>Brindisi, Italy</strong></td>
+                    <td>Global Service Centre</td>
+                    <td>Field support operations, peacekeeping mission ICT, logistics support</td>
+                </tr>
+            </table>
+            
+            <h3>Our Data Landscape</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Data Repositories</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">18-25</span>
+                    <span class="stat-label">Secretariat Entities</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">2.5-3 PB</span>
+                    <span class="stat-label">Archive Size</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">90%</span>
+                    <span class="stat-label">Multilingual Coverage</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">80%+</span>
+                    <span class="stat-label">Internal Enterprise Data</span>
+                </div>
+            </div>
+            
+            <h3>Specialized Datasets</h3>
+            <ul>
+                <li><strong>Humanitarian Data Exchange (HDX)</strong> - Crisis and development data</li>
+                <li><strong>UNDRR Risk Data</strong> - Disaster risk and resilience information</li>
+                <li><strong>Geospatial Data</strong> - Satellite imagery from UN-SPIDER and UNOOSA</li>
+                <li><strong>Peacekeeping Mission Data</strong> - Operational field mission data</li>
+                <li><strong>Diplomatic Archives</strong> - Historical treaties, resolutions, negotiations</li>
+            </ul>
+            
+            <h3>Service Lines</h3>
+            <table>
+                <tr>
+                    <th>Service</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><strong>Enterprise Solutions</strong></td>
+                    <td>M365 deployment (including Copilot), ERP, business intelligence</td>
+                </tr>
+                <tr>
+                    <td><strong>ICT Security</strong></td>
+                    <td>CSOC, identity management, DLP, incident response</td>
+                </tr>
+                <tr>
+                    <td><strong>Field Support</strong></td>
+                    <td>Peacekeeping ICT, humanitarian emergency tech, remote deployment</td>
+                </tr>
+                <tr>
+                    <td><strong>Business Relationship</strong></td>
+                    <td>Liaison with departments, requirements gathering, change management</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Section 6: Governance Agenda -->
+        <section class="section">
+            <h2>6. Governance Agenda - Strategic Questions</h2>
+            
+            <h3>Key Strategic Questions</h3>
+            
+            <div class="callout callout-warning">
+                <h4>Question 1: Who governs what Copilot can learn?</h4>
+                <p>Microsoft 365 Copilot now has access to petabytes of UN data. Without governance, we risk:</p>
+                <ul>
+                    <li>Uncontrolled training on sensitive diplomatic communications</li>
+                    <li>Exposure of confidential information through AI-generated responses</li>
+                    <li>Loss of data sovereignty to commercial AI systems</li>
+                </ul>
+            </div>
+            
+            <div class="callout callout-warning">
+                <h4>Question 2: Can we innovate safely?</h4>
+                <p>Our highest-value enterprise data is also our highest risk:</p>
+                <ul>
+                    <li>Balancing AI innovation with security requirements</li>
+                    <li>Enabling productivity gains without compromising safety</li>
+                    <li>Managing vendor dependencies while maintaining control</li>
+                </ul>
+            </div>
+            
+            <div class="callout callout-warning">
+                <h4>Question 3: Will AI serve all UN languages equally?</h4>
+                <p>The UN holds the world's largest multilingual diplomatic corpus:</p>
+                <ul>
+                    <li>Commercial AI models often underperform in non-English languages</li>
+                    <li>Risk of perpetuating English-language dominance</li>
+                    <li>Need for specialized models trained on diplomatic language across all six official UN languages</li>
+                </ul>
+            </div>
+            
+            <div class="callout callout-warning">
+                <h4>Question 4: How is UN data represented in external models?</h4>
+                <p>When commercial AI references "UN data," our credibility is at stake:</p>
+                <ul>
+                    <li>Ensuring accurate representation of UN positions and data</li>
+                    <li>Preventing misattribution or misinterpretation</li>
+                    <li>Maintaining authority over official UN information</li>
+                </ul>
+            </div>
+            
+            <div class="callout">
+                <p><strong>These are not hypothetical issues—they define the Secretariat's governance roadmap.</strong></p>
+            </div>
+        </section>
+
+        <!-- Section 7: Challenges -->
+        <section class="section">
+            <h2>7. Challenges - Current Realities</h2>
+            
+            <h3>Six Governance Roadblocks</h3>
+            
+            <h4>1. Loss of Data Control</h4>
+            <p>UN data used in commercial AI training without consent or oversight.</p>
+            <ul>
+                <li>Public UN datasets scraped for model training</li>
+                <li>No attribution or accuracy verification</li>
+                <li>Risk of perpetuating outdated or incorrect information</li>
+            </ul>
+            
+            <h4>2. Vendor Dependence</h4>
+            <p>Governance tied to vendor roadmaps and privacy policies.</p>
+            <ul>
+                <li>Limited control over feature deployment timing</li>
+                <li>Dependency on vendor governance capabilities</li>
+                <li>Risk of vendor lock-in affecting governance portability</li>
+            </ul>
+            
+            <h4>3. Data Leakage Risk</h4>
+            <p>Using third-party AI services may inadvertently train external models.</p>
+            <ul>
+                <li>Unclear data handling practices by AI providers</li>
+                <li>Risk of sensitive information exposure through AI outputs</li>
+                <li>Need for contractual safeguards and technical controls</li>
+            </ul>
+            
+            <h4>4. Federated Ownership Constraints</h4>
+            <p>Fragmented data ownership prevents full AI access and deployment.</p>
+            <ul>
+                <li>18-25 entities with different priorities and systems</li>
+                <li>No single "owner" requires coordination mechanisms</li>
+                <li>Varying technical capacity across entities</li>
+            </ul>
+            
+            <h4>5. Language Equity Gaps</h4>
+            <p>AI models underperform in non-English and low-resource contexts.</p>
+            <ul>
+                <li>Commercial models optimized for English</li>
+                <li>Limited training data in other UN official languages</li>
+                <li>Risk of perpetuating language-based inequities</li>
+            </ul>
+            
+            <h4>6. Ethical Integration at Speed</h4>
+            <p>Humanitarian missions provide ideal settings, but require governance frameworks to match pace and scale.</p>
+            <ul>
+                <li>Rapid deployment needs vs. thorough governance</li>
+                <li>Vulnerable population protection requirements</li>
+                <li>Balancing innovation with ethical safeguards</li>
+            </ul>
+            
+            <div class="callout">
+                <p><strong>Mitigation Approach:</strong> Sociotechnical solutions combining policy, risk assessment, ethics frameworks, and technical standards—recognizing the landscape evolves rapidly.</p>
+            </div>
+        </section>
+
+        <!-- Section 8: Countermeasures -->
+        <section class="section">
+            <h2>8. Countermeasures - How We're Responding</h2>
+            
+            <h3>Legal & Policy Actions</h3>
+            <ul>
+                <li><strong>UN-specific AI terms</strong> with commercial partners</li>
+                <li><strong>Data residency controls</strong> and opt-out mechanisms for AI training</li>
+                <li><strong>UN AI data licensing framework</strong> and attribution requirements</li>
+                <li><strong>robots.txt / HTTP headers</strong> and API rate enforcement for public datasets</li>
+            </ul>
+            
+            <h3>Technical Safeguards</h3>
+            <ul>
+                <li><strong>Tiered AI access</strong> based on data sensitivity</li>
+                <li><strong>Secure AI sandboxes</strong> for high-risk work</li>
+                <li><strong>Audit trails</strong> and explainability standards</li>
+                <li><strong>AI-specific data access governance</strong> with automated controls</li>
+            </ul>
+            
+            <h3>Language & Equity Initiatives</h3>
+            <ul>
+                <li><strong>Multilingual AI training</strong> across all six official UN languages (Arabic, Chinese, English, French, Russian, Spanish)</li>
+                <li><strong>Language-equity requirements</strong> in vendor contracts</li>
+                <li><strong>Diplomatic domain-specific models</strong> trained on UN corpus</li>
+                <li><strong>Shared datasets</strong> with developing countries for capacity building</li>
+            </ul>
+            
+            <h3>Procurement & Vendor Oversight</h3>
+            <ul>
+                <li><strong>Standard AI contractual clauses</strong> in every tech agreement</li>
+                <li><strong>Mandatory pre-deployment evaluation</strong> of AI features</li>
+                <li><strong>Contractual exit/portability rights</strong> for data and models</li>
+                <li><strong>Vendor performance monitoring</strong> against governance standards</li>
+            </ul>
+            
+            <h3>Organizational Evolution</h3>
+            <ul>
+                <li><strong>Global expansion</strong> of governance partnerships</li>
+                <li><strong>Personnel relocation</strong> to operational hubs for real-time oversight</li>
+                <li><strong>Cross-functional teams</strong> spanning legal, technical, and policy domains</li>
+                <li><strong>Continuous learning</strong> from operational experience</li>
+            </ul>
+            
+            <div class="callout callout-success">
+                <p><strong>Result:</strong> A resilient governance ecosystem—adaptive, accountable, and global.</p>
+            </div>
+        </section>
+
+        <!-- Section 9: Implementation -->
+        <section class="section">
+            <h2>9. Implementation Pathway - Governance Maturity Model</h2>
+            
+            <h3>Five-Level Maturity Model</h3>
+            <table>
+                <tr>
+                    <th>Level</th>
+                    <th>Focus Area</th>
+                    <th>Outcome</th>
+                    <th>Timeframe</th>
+                </tr>
+                <tr>
+                    <td><strong>Level 1</strong></td>
+                    <td>Policy & Compliance</td>
+                    <td>Baseline AI controls established</td>
+                    <td>0-6 months</td>
+                </tr>
+                <tr>
+                    <td><strong>Level 2</strong></td>
+                    <td>Risk & Data Management</td>
+                    <td>Standard AI safeguards operational</td>
+                    <td>6-12 months</td>
+                </tr>
+                <tr>
+                    <td><strong>Level 3</strong></td>
+                    <td>Cross-Entity Governance</td>
+                    <td>Shared frameworks & data standards</td>
+                    <td>12-18 months</td>
+                </tr>
+                <tr>
+                    <td><strong>Level 4</strong></td>
+                    <td>Global Interoperability</td>
+                    <td>Multi-jurisdictional AI scaling</td>
+                    <td>18-30 months</td>
+                </tr>
+                <tr>
+                    <td><strong>Level 5</strong></td>
+                    <td>Ethical Intelligence</td>
+                    <td>Continuous trust governance & global alignment</td>
+                    <td>30+ months</td>
+                </tr>
+            </table>
+            
+            <h3>Implementation Phases</h3>
+            
+            <h4>Phase 1: Foundation (Months 1-6)</h4>
+            <ul>
+                <li>Establish governance structure and leadership</li>
+                <li>Deploy Layers 1-3 of governance stack</li>
+                <li>Create AI system registry</li>
+                <li>Develop initial policies and procedures</li>
+                <li>Begin stakeholder engagement</li>
+            </ul>
+            
+            <h4>Phase 2: Operationalization (Months 6-12)</h4>
+            <ul>
+                <li>Add Layers 4-5 to governance stack</li>
+                <li>Implement automated controls and monitoring</li>
+                <li>Launch AI Steward network across entities</li>
+                <li>Begin multilingual AI initiatives</li>
+                <li>Establish vendor governance protocols</li>
+            </ul>
+            
+            <h4>Phase 3: Scaling (Months 12-24)</h4>
+            <ul>
+                <li>Complete full governance stack (Layer 6)</li>
+                <li>Expand to all Secretariat entities</li>
+                <li>Launch external partnerships and testbeds</li>
+                <li>Publish transparency reports</li>
+                <li>Begin capacity building for Member States</li>
+            </ul>
+            
+            <h4>Phase 4: Leadership (Months 24+)</h4>
+            <ul>
+                <li>Drive global governance standards</li>
+                <li>Enable AI-powered multilateralism</li>
+                <li>Share best practices internationally</li>
+                <li>Continuous improvement and innovation</li>
+            </ul>
+            
+            <div class="callout">
+                <p><strong>Success Metrics:</strong> % systems governed, incident response time, stakeholder trust scores, language equity measures, vendor compliance rate</p>
+            </div>
+        </section>
+
+        <!-- Section 10: Conclusion -->
+        <section class="section">
+            <h2>10. Conclusion - Governance as the Infrastructure of Peace</h2>
+            
+            <h3>Core Message</h3>
+            <div class="callout callout-success">
+                <p style="font-size: 1.15rem; font-weight: 500; margin: 0;">
+                    AI governance is not a barrier to innovation—it is the foundation that makes innovation sustainable.
+                </p>
+            </div>
+            
+            <h3>Our Mission Continues</h3>
+            <p>In the 20th century, the United Nations safeguarded peace through diplomacy.<br>
+            In the 21st century, we safeguard peace through digital cooperation, algorithmic accountability, and data ethics.</p>
+            
+            <div class="callout">
+                <p style="font-size: 1.1rem; text-align: center; margin: 0;">
+                    <strong>We are not governing code.<br>
+                    We are governing power, knowledge, and trust.</strong>
+                </p>
+            </div>
+            
+            <h3>Call to Action</h3>
+            <p style="font-size: 1.05rem; font-style: italic;">
+                "Every dataset, every model, and every decision can contribute to peace—if it is governed well."
+            </p>
+            
+            <p>This playbook invites all Secretariat entities and partners to join a coordinated effort: building a trustworthy, multilingual, globally interoperable AI future.</p>
+            
+            <h3>Next Steps</h3>
+            <ol>
+                <li><strong>Assess your current AI governance maturity</strong> using the framework in Section 9</li>
+                <li><strong>Identify governance gaps</strong> using the decision framework in Section 4A</li>
+                <li><strong>Engage with OICT</strong> to access governance tools and resources</li>
+                <li><strong>Join UN80 working groups</strong> to contribute to global AI governance</li>
+                <li><strong>Share your learnings</strong> to strengthen the collective governance ecosystem</li>
+            </ol>
+            
+            <h3>Three Horizons</h3>
+            <table>
+                <tr>
+                    <th>Horizon</th>
+                    <th>Timeframe</th>
+                    <th>Focus</th>
+                    <th>Goals</th>
+                </tr>
+                <tr>
+                    <td><strong>Horizon 1</strong></td>
+                    <td>2025-2026</td>
+                    <td>Stabilize</td>
+                    <td>Establish baseline governance, secure current systems</td>
+                </tr>
+                <tr>
+                    <td><strong>Horizon 2</strong></td>
+                    <td>2026-2028</td>
+                    <td>Scale</td>
+                    <td>Expand across Secretariat, deepen partnerships</td>
+                </tr>
+                <tr>
+                    <td><strong>Horizon 3</strong></td>
+                    <td>2028-2030</td>
+                    <td>Lead</td>
+                    <td>Drive global standards, enable AI-powered multilateralism</td>
+                </tr>
+            </table>
+            
+            <div class="callout callout-success">
+                <p style="font-size: 1.05rem; font-weight: 500; text-align: center; margin: 0;">
+                    "AI governance is the infrastructure of peace."
+                </p>
+            </div>
+            
+            <h3>Additional Resources</h3>
+            <ul>
+                <li><a href="https://www.un.org/techenvoy/content/ai-governance" class="external-link">UN AI Governance Hub</a></li>
+                <li><a href="https://sdg.iisd.org/news/un-drives-global-cooperation-on-ai-governance/" class="external-link">UN AI Cooperation Updates</a></li>
+                <li><a href="https://www.weforum.org/stories/2025/09/responsible-ai-governance-innovations/" class="external-link">WEF Responsible AI Playbook</a></li>
+                <li><a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" class="external-link">EU AI Act</a></li>
+                <li><a href="https://www.nist.gov/itl/ai-risk-management-framework" class="external-link">NIST AI Risk Management Framework</a></li>
+                <li><a href="https://www.iso.org/standard/81230.html" class="external-link">ISO/IEC 42001:2023</a></li>
+            </ul>
+        </section>
+    </main>
+    </div>
+
+    <div class="progress-indicator">1/12</div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="presenter-info">
+                <strong>Presenter:</strong> Tristan Gitman<br>
+                <strong>Email:</strong> <a href="mailto:Tristan.Gitman@un.org">Tristan.Gitman@un.org</a><br>
+                <strong>Title:</strong> AI Governance Advisor<br>
+                <strong>Division:</strong> Policy, Strategy & Data Governance Division<br>
+                <strong>Office:</strong> Office of Information and Communications Technology (OICT)<br>
+                <strong>Organization:</strong> United Nations Secretariat
+            </div>
+            <p style="margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.8;">
+                © 2025 United Nations | GeoNow 2025 Conference
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function showSection(index) {
+            const sections = document.querySelectorAll('.section');
+            const buttons = document.querySelectorAll('.nav-btn');
+            const progressEl = document.querySelector('.progress-indicator');
+            
+            // Hide all sections
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Remove active from all buttons
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected section
+            sections[index].classList.add('active');
+            buttons[index].classList.add('active');
+            
+            // Update progress
+            if (progressEl) {
+                progressEl.textContent = (index + 1) + '/12';
+            }
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('UN AI Governance Playbook loaded successfully');
+        });
+    </script>
+</body>
+</html>
